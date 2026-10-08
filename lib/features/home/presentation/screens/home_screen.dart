@@ -141,7 +141,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: const ProductGridSection(),
+                child: ProductGridSection(
+                  selectedCategory: categories[selectedIndex],
+                ),
               ),
             ),
           ],

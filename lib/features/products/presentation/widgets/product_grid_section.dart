@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
+import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/features/products/presentation/providers/product_providers.dart';
 import 'package:nexa/features/products/presentation/widgets/product_card.dart';
 import 'package:nexa/features/products/presentation/widgets/product_card_skeleton.dart';
 
 class ProductGridSection extends ConsumerWidget {
-  const ProductGridSection({super.key});
+  const ProductGridSection({super.key, required this.selectedCategory});
+
+  final String selectedCategory;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,21 +34,27 @@ class ProductGridSection extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(vertical: 24.0),
           child: Text(
             'Failed to load items: $err',
-            style: const TextStyle(
-              fontFamily: 'Plus Jakarta Sans',
-              fontSize: 14,
-              color: AppColors.error,
-            ),
+            style: AppTextStyles.body2Regular.copyWith(color: AppColors.error),
           ),
         ),
       ),
       data: (products) {
-        if (products.isEmpty) {
+        final filteredProducts = selectedCategory == 'All'
+            ? products
+            : products
+                  .where(
+                    (product) =>
+                        product.category.toLowerCase() ==
+                        selectedCategory.toLowerCase(),
+                  )
+                  .toList();
+
+        if (filteredProducts.isEmpty) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 32.0),
               child: Text(
-                'No products available.',
+                'No products found in this category.',
                 style: TextStyle(
                   fontFamily: 'Plus Jakarta Sans',
                   fontSize: 14,
@@ -65,9 +74,9 @@ class ProductGridSection extends ConsumerWidget {
             crossAxisSpacing: 16,
             mainAxisSpacing: 20,
           ),
-          itemCount: products.length,
+          itemCount: filteredProducts.length,
           itemBuilder: (context, index) {
-            final product = products[index];
+            final product = filteredProducts[index];
             return ProductCard(
               product: product,
               onTap: () {
