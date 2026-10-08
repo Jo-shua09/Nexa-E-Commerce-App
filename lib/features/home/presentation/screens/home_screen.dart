@@ -13,7 +13,13 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int selectedIndex = 0;
-  final List<String> categories = ["All", "Tshirts", "Jeans", "Shoes", "Bags"];
+  final List<String> categories = [
+    "All",
+    "Tops",
+    "Outerwear",
+    "Bottoms",
+    "Footwear",
+  ];
 
   @override
   Widget build(BuildContext context) {

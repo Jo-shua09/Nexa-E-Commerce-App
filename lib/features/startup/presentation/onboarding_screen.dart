@@ -72,7 +72,7 @@ class OnboardingScreen extends ConsumerWidget {
                       backgroundColor: AppColors.gray900,
                       foregroundColor: AppColors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 0,
                     ),
