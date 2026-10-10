@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:nexa/features/products/data/repositories/product_repository.dart';
 import 'package:nexa/features/products/domain/models/products.dart';
 
