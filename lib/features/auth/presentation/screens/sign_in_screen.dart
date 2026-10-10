@@ -15,7 +15,7 @@ class SignInScreen extends ConsumerStatefulWidget {
 bool isObscure = true;
 bool isButtonActive = true;
 
-final TextStyle LinkStyle = TextStyle(
+final TextStyle linkStyle = TextStyle(
   decoration: TextDecoration.underline,
   decorationColor: AppColors.gray900,
   decorationThickness: 1.0,
@@ -95,7 +95,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 children: <TextSpan>[
                   TextSpan(
                     text: 'Reset your password',
-                    style: LinkStyle,
+                    style: linkStyle,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         context.push("/forgot-password");
@@ -213,7 +213,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Join',
-                      style: LinkStyle,
+                      style: linkStyle,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           context.go("/sign-up");

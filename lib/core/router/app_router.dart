@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/features/auth/presentation/screens/forgot_password.dart';
 import 'package:nexa/features/auth/presentation/screens/reset_password.dart';

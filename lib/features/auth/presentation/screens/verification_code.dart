@@ -69,7 +69,7 @@ class VerificationCode extends ConsumerWidget {
                   children: <TextSpan>[
                     TextSpan(
                       text: "Resend code",
-                      style: LinkStyle,
+                      style: linkStyle,
                       recognizer: TapGestureRecognizer()..onTap = () {},
                     ),
                   ],

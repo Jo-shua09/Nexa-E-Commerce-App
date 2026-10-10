@@ -15,7 +15,7 @@ class SignUpScreen extends ConsumerStatefulWidget {
 bool isObscure = true;
 bool isButtonActive = true;
 
-final TextStyle LinkStyle = TextStyle(
+final TextStyle linkStyle = TextStyle(
   decoration: TextDecoration.underline,
   decorationColor: AppColors.gray900,
   decorationThickness: 1.0,
@@ -103,12 +103,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   color: AppColors.gray500,
                 ),
                 children: <TextSpan>[
-                  TextSpan(text: 'Terms', style: LinkStyle),
+                  TextSpan(text: 'Terms', style: linkStyle),
                   TextSpan(text: ', '),
-                  TextSpan(text: 'Privacy Policy', style: LinkStyle),
+                  TextSpan(text: 'Privacy Policy', style: linkStyle),
                   TextSpan(text: ', '),
                   TextSpan(text: 'and '),
-                  TextSpan(text: 'Cookie Use', style: LinkStyle),
+                  TextSpan(text: 'Cookie Use', style: linkStyle),
                 ],
               ),
             ),
@@ -221,7 +221,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                   children: <TextSpan>[
                     TextSpan(
                       text: 'Log in',
-                      style: LinkStyle,
+                      style: linkStyle,
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           context.go("/sign-in");
