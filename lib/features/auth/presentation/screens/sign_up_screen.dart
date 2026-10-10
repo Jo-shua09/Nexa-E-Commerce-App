@@ -42,7 +42,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ),
             ),
             Text(
-              "Let\'s create your account",
+              "Let's create your account",
               style: AppTextStyles.body2Regular.copyWith(
                 color: AppColors.gray400,
               ),

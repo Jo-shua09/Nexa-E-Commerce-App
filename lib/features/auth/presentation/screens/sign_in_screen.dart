@@ -42,7 +42,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
             ),
             Text(
-              "It\'s great to see you again.",
+              "It's great to see you again.",
               style: AppTextStyles.body2Regular.copyWith(
                 color: AppColors.gray400,
               ),
