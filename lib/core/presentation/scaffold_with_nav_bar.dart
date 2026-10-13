@@ -1,69 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
+import 'package:nexa/core/theme/app_text_styles.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   const ScaffoldWithNavBar({super.key, required this.navigationShell});
 
+  void _onTap(int index) {
+    navigationShell.goBranch(
+      index,
+      initialLocation: index == navigationShell.currentIndex,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: navigationShell,
       bottomNavigationBar: Container(
+        height: 72,
         decoration: const BoxDecoration(
-          border: Border(top: BorderSide(color: AppColors.gray100, width: 1)),
+          color: AppColors.white,
+          border: Border(top: BorderSide(color: AppColors.gray100, width: 1.0)),
         ),
-        child: NavigationBar(
-          selectedIndex: navigationShell.currentIndex,
-          backgroundColor: AppColors.white,
-          indicatorColor: Colors.transparent,
-          elevation: 0,
-          onDestinationSelected: (index) {
-            navigationShell.goBranch(
-              index,
-              initialLocation: index == navigationShell.currentIndex,
-            );
-          },
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.home_outlined, color: AppColors.gray500),
-              selectedIcon: Icon(Icons.home_filled, color: AppColors.gray900),
-              label: 'Home',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.search_rounded, color: AppColors.gray500),
-              selectedIcon: Icon(
-                Icons.search_rounded,
-                color: AppColors.gray900,
+        child: SafeArea(
+          top: false,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _NavItem(
+                icon: Icons.home_outlined,
+                activeIcon: Icons.home_filled,
+                label: "Home",
+                isSelected: navigationShell.currentIndex == 0,
+                onTap: () => _onTap(0),
               ),
-              label: 'Explore',
-            ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.favorite_outline_rounded,
-                color: AppColors.gray500,
+              _NavItem(
+                icon: Icons.search_rounded,
+                activeIcon: Icons.search_rounded,
+                label: "Search",
+                isSelected: navigationShell.currentIndex == 1,
+                onTap: () => _onTap(1),
               ),
-              selectedIcon: Icon(
-                Icons.favorite_rounded,
-                color: AppColors.gray900,
+              _NavItem(
+                icon: Icons.favorite_border_rounded,
+                activeIcon: Icons.favorite_border_rounded,
+                label: "Saved",
+                isSelected: navigationShell.currentIndex == 2,
+                onTap: () => _onTap(2),
               ),
-              label: 'Saved',
-            ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.person_outline_rounded,
-                color: AppColors.gray500,
+              _NavItem(
+                icon: Icons.shopping_cart_outlined,
+                activeIcon: Icons.shopping_cart_outlined,
+                label: "Cart",
+                isSelected: navigationShell.currentIndex == 3,
+                onTap: () => _onTap(3),
               ),
-              selectedIcon: Icon(
-                Icons.person_rounded,
-                color: AppColors.gray900,
+              _NavItem(
+                icon: Icons.person_outline_rounded,
+                activeIcon: Icons.person_rounded,
+                label: "Home",
+                isSelected: navigationShell.currentIndex == 0,
+                onTap: () => _onTap(0),
               ),
-              label: 'Profile',
-            ),
-          ],
+            ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            isSelected ? activeIcon : icon,
+            size: 22,
+            color: isSelected ? AppColors.gray900 : AppColors.gray400,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: AppTextStyles.body3SemiBold.copyWith(
+              letterSpacing: 0.2,
+              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+              color: isSelected ? AppColors.gray900 : AppColors.gray400,
+            ),
+          ),
+        ],
       ),
     );
   }
