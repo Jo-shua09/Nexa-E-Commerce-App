@@ -72,7 +72,7 @@ class _PopulatedNotificationsList extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
       itemCount: grouped.length,
       itemBuilder: (context, index) {
         final groupKey = grouped.keys.elementAt(index);
@@ -206,7 +206,7 @@ class _EmptyNotificationsView extends StatelessWidget {
                 color: AppColors.gray400,
               ),
             ),
-            const SizedBox(height: 60), // Visual offset centering
+            const SizedBox(height: 60),
           ],
         ),
       ),
