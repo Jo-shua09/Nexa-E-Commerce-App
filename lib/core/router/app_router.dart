@@ -10,6 +10,7 @@ import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/verification_code.dart';
 import 'package:nexa/features/home/presentation/screens/home_screen.dart';
 import 'package:nexa/features/notifications/presentation/notification_screen.dart';
+import 'package:nexa/features/search/presentation/search_screen.dart';
 import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
 import 'package:nexa/features/startup/presentation/splash_screen.dart';
 
@@ -104,13 +105,12 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
 
-          //Branch 1 Search
+          // Branch 1: Search / Explore
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: "/search",
-                builder: (context, state) =>
-                    const Scaffold(body: Center(child: Text("search screen"))),
+                path: '/search',
+                builder: (context, state) => const SearchScreen(),
               ),
             ],
           ),
