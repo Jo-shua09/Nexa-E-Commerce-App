@@ -23,7 +23,7 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   String _selectedSort = 'Relevance';
-  RangeValues _priceRange = const RangeValues(0, 1000);
+  RangeValues _priceRange = const RangeValues(0, 120);
   String _selectedSize = 'L';
 
   final List<String> _sortOptions = [
