@@ -13,14 +13,13 @@ import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
 import 'package:nexa/features/startup/presentation/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-final shellNavigatorKey = GlobalKey<NavigatorState>();
-
 final authStateProvider = StateProvider<bool>((ref) => false);
 
 final routerProvider = Provider<GoRouter>((ref) {
   final isAuthenticated = ref.watch(authStateProvider);
 
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/splash',
     debugLogDiagnostics: true,
     redirect: (context, state) {
@@ -88,21 +87,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/home',
                 builder: (context, state) => const HomeScreen(),
-                routes: [
-                  GoRoute(
-                    path: 'product/:id',
-                    parentNavigatorKey: rootNavigatorKey,
-                    builder: (context, state) {
-                      final productId = state.pathParameters['id']!;
-                      return Scaffold(
-                        appBar: AppBar(),
-                        body: Center(
-                          child: Text("Product Details: $productId"),
-                        ),
-                      );
-                    },
-                  ),
-                ],
               ),
             ],
           ),
@@ -118,6 +102,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: '/home/product/:id',
+        builder: (context, state) {
+          final productId = state.pathParameters['id']!;
+          return Scaffold(
+            appBar: AppBar(),
+            body: Center(child: Text("Product Details: $productId")),
+          );
+        },
       ),
     ],
   );
