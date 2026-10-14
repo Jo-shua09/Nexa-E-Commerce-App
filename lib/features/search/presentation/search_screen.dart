@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
-import 'package:nexa/features/products/domain/models/products.dart';
+import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/search/presentation/providers/search_providers.dart';
 import 'package:nexa/features/search/presentation/widgets/empty_search_widget.dart';
 import 'package:nexa/features/search/presentation/widgets/recent_search_widget.dart';
@@ -81,13 +81,12 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.gray900,
-              size: 24,
-            ),
-            onPressed: () => context.push('/notifications'),
+          CircularIconButton(
+            icon: Icons.notifications_none_rounded,
+            hasBadge: true,
+            onTap: () {
+              context.push('/notifications');
+            },
           ),
           const SizedBox(width: 8),
         ],

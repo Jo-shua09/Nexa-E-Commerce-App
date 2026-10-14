@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/products/presentation/widgets/product_grid_section.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -34,7 +35,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
         actions: [
-          _CircularIconButton(
+          CircularIconButton(
             icon: Icons.notifications_none_rounded,
             hasBadge: true,
             onTap: () {
@@ -151,53 +152,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _CircularIconButton extends StatelessWidget {
-  const _CircularIconButton({
-    required this.icon,
-    required this.hasBadge,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final bool hasBadge;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 44,
-      height: 44,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Material(
-              color: AppColors.white,
-              shape: const CircleBorder(),
-              child: IconButton(
-                onPressed: onTap,
-                icon: Icon(icon, color: AppColors.gray900),
-              ),
-            ),
-          ),
-          if (hasBadge)
-            Positioned(
-              top: 7,
-              right: 7,
-              child: Container(
-                width: 8,
-                height: 8,
-                decoration: const BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-        ],
       ),
     );
   }

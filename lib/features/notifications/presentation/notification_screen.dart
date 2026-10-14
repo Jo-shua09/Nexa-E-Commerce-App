@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
+import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/notifications/domain/models/notification_items.dart';
 import 'package:nexa/features/notifications/presentation/providers/notification_provider.dart';
 
@@ -22,7 +23,7 @@ class NotificationsScreen extends ConsumerWidget {
           icon: const Icon(
             Icons.arrow_back,
             color: AppColors.gray900,
-            size: 24,
+            size: 22,
           ),
           onPressed: () => context.pop(),
         ),
@@ -37,13 +38,12 @@ class NotificationsScreen extends ConsumerWidget {
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.gray900,
-              size: 24,
-            ),
-            onPressed: () {},
+          CircularIconButton(
+            icon: Icons.notifications_none_rounded,
+            hasBadge: true,
+            onTap: () {
+              context.push('/notifications');
+            },
           ),
           const SizedBox(width: 8),
         ],
@@ -72,7 +72,7 @@ class _PopulatedNotificationsList extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       itemCount: grouped.length,
       itemBuilder: (context, index) {
         final groupKey = grouped.keys.elementAt(index);
