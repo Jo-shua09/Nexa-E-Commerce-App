@@ -9,6 +9,7 @@ import 'package:nexa/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/verification_code.dart';
 import 'package:nexa/features/home/presentation/screens/home_screen.dart';
+import 'package:nexa/features/notifications/presentation/notification_screen.dart';
 import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
 import 'package:nexa/features/startup/presentation/splash_screen.dart';
 
@@ -81,6 +82,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/reset-password',
         name: 'reset password',
         builder: (context, state) => const ResetPassword(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const NotificationsScreen(),
       ),
 
       StatefulShellRoute.indexedStack(
