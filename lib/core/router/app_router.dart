@@ -16,23 +16,30 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final authStateProvider = StateProvider<bool>((ref) => false);
 
 final routerProvider = Provider<GoRouter>((ref) {
-  final isAuthenticated = ref.watch(authStateProvider);
-
-  return GoRouter(
+  final router = GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/splash',
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final isGoingToAuth = state.matchedLocation == '/login';
+      final isAuthenticated = ref.read(authStateProvider);
+      final isGoingToPublicRoute = {
+        '/onboarding',
+        '/sign-in',
+        '/sign-up',
+        '/forgot-password',
+        '/verification-code',
+        '/reset-password',
+      }.contains(state.matchedLocation);
       final isGoingToSplash = state.matchedLocation == '/splash';
 
       if (isGoingToSplash) return null;
 
-      if (!isAuthenticated && !isGoingToAuth) {
-        return '/login';
+      if (!isAuthenticated && !isGoingToPublicRoute) {
+        return '/sign-in';
       }
 
-      if (isAuthenticated && isGoingToAuth) {
+      if (isAuthenticated &&
+          {'/sign-in', '/sign-up'}.contains(state.matchedLocation)) {
         return '/home';
       }
 
@@ -115,4 +122,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
     ],
   );
+
+  ref.listen(authStateProvider, (previous, next) {
+    router.refresh();
+  });
+  ref.onDispose(router.dispose);
+
+  return router;
 });

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexa/core/router/app_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
 
@@ -119,6 +120,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               child: ElevatedButton(
                 onPressed: isButtonActive
                     ? () {
+                        ref.read(authStateProvider.notifier).state = true;
                         context.go('/home');
                       }
                     : null,

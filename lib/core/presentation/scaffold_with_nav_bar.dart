@@ -62,9 +62,9 @@ class ScaffoldWithNavBar extends StatelessWidget {
               _NavItem(
                 icon: Icons.person_outline_rounded,
                 activeIcon: Icons.person_rounded,
-                label: "Home",
-                isSelected: navigationShell.currentIndex == 0,
-                onTap: () => _onTap(0),
+                label: "Profile",
+                isSelected: navigationShell.currentIndex == 4,
+                onTap: () => _onTap(4),
               ),
             ],
           ),
