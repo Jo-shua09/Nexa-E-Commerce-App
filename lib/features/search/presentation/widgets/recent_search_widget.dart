@@ -22,7 +22,7 @@ class RecentSearchWidget extends StatelessWidget {
       return Center(
         child: Text(
           'No recent searches',
-          style: AppTextStyles.body2Regular.copyWith(color: AppColors.gray400),
+          style: AppTextStyles.body3Regular.copyWith(color: AppColors.gray400),
         ),
       );
     }
@@ -34,15 +34,16 @@ class RecentSearchWidget extends StatelessWidget {
           children: [
             Text(
               'Recent Searches',
-              style: AppTextStyles.body1SemiBold.copyWith(
+              style: AppTextStyles.body2SemiBold.copyWith(
                 color: AppColors.gray900,
+                fontWeight: FontWeight.w900,
               ),
             ),
             GestureDetector(
               onTap: onClearAll,
               child: Text(
                 'Clear all',
-                style: AppTextStyles.body2Regular.copyWith(
+                style: AppTextStyles.body3Regular.copyWith(
                   color: AppColors.gray900,
                   decoration: TextDecoration.underline,
                 ),
@@ -61,7 +62,7 @@ class RecentSearchWidget extends StatelessWidget {
                 onTap: () => onSelect(term),
                 title: Text(
                   term,
-                  style: AppTextStyles.body2Regular.copyWith(
+                  style: AppTextStyles.body3SemiBold.copyWith(
                     color: AppColors.gray700,
                   ),
                 ),
@@ -70,7 +71,7 @@ class RecentSearchWidget extends StatelessWidget {
                   child: const Icon(
                     Icons.cancel_outlined,
                     color: AppColors.gray400,
-                    size: 20,
+                    size: 18,
                   ),
                 ),
               ),

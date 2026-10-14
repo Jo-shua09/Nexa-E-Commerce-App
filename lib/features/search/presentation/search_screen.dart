@@ -95,7 +95,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         children: [
           // Search Input Bar
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 3),
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
             child: Container(
               height: 52,
               decoration: BoxDecoration(
