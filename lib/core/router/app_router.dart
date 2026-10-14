@@ -10,6 +10,8 @@ import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/verification_code.dart';
 import 'package:nexa/features/home/presentation/home_screen.dart';
 import 'package:nexa/features/notifications/presentation/notification_screen.dart';
+import 'package:nexa/features/products/presentation/product_details_screen.dart';
+import 'package:nexa/features/products/presentation/reviews_screen.dart';
 import 'package:nexa/features/saved/presentation/saved_screen.dart';
 import 'package:nexa/features/search/presentation/search_screen.dart';
 import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
@@ -96,17 +98,34 @@ final routerProvider = Provider<GoRouter>((ref) {
           return ScaffoldWithNavBar(navigationShell: navigationShell);
         },
         branches: [
-          //Branch 0 Home
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/home',
                 builder: (context, state) => const HomeScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'product/:id',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) {
+                      final id = state.pathParameters['id']!;
+                      return ProductDetailsScreen(productId: id);
+                    },
+                    routes: [
+                      GoRoute(
+                        path: 'reviews',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) {
+                          final id = state.pathParameters['id']!;
+                          return ReviewsScreen(productId: id);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
-
-          // Branch 1: Search / Explore
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -115,8 +134,6 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
-
-          // Branch 2: Saved / Wishlist
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -126,16 +143,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             ],
           ),
         ],
-      ),
-      GoRoute(
-        path: '/home/product/:id',
-        builder: (context, state) {
-          final productId = state.pathParameters['id']!;
-          return Scaffold(
-            appBar: AppBar(),
-            body: Center(child: Text("Product Details: $productId")),
-          );
-        },
       ),
     ],
   );
