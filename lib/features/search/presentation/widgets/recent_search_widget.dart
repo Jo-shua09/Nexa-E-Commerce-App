@@ -51,7 +51,7 @@ class RecentSearchWidget extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 8),
 
         ...recentSearches.map((term) {
           return Column(

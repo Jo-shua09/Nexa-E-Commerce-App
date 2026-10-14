@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/CustomRangeThumbShape.dart';
+import 'package:nexa/core/widgets/full_width_range_slider_track_shape.dart';
 
 class FilterBottomSheet extends StatefulWidget {
   const FilterBottomSheet({super.key});
@@ -8,6 +10,7 @@ class FilterBottomSheet extends StatefulWidget {
   static Future<void> show(BuildContext context) {
     return showModalBottomSheet(
       context: context,
+      useRootNavigator: true,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) => const FilterBottomSheet(),
@@ -20,7 +23,7 @@ class FilterBottomSheet extends StatefulWidget {
 
 class _FilterBottomSheetState extends State<FilterBottomSheet> {
   String _selectedSort = 'Relevance';
-  RangeValues _priceRange = const RangeValues(0, 190);
+  RangeValues _priceRange = const RangeValues(0, 1000);
   String _selectedSize = 'L';
 
   final List<String> _sortOptions = [
@@ -38,7 +41,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +58,6 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
             ),
           ),
           const SizedBox(height: 14),
-
-          // Header Row: Title & Close Button
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -76,12 +77,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
-
-          // 1. Sort By
+          Divider(color: AppColors.gray700, thickness: .1, height: 24),
           Text(
             'Sort By',
-            style: AppTextStyles.body1SemiBold.copyWith(
+            style: AppTextStyles.body2SemiBold.copyWith(
               color: AppColors.gray900,
             ),
           ),
@@ -97,8 +96,8 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     onTap: () => setState(() => _selectedSort = option),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 10,
+                        horizontal: 12,
+                        vertical: 8,
                       ),
                       decoration: BoxDecoration(
                         color: isSelected ? AppColors.gray900 : AppColors.white,
@@ -123,27 +122,26 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               }).toList(),
             ),
           ),
-          const SizedBox(height: 24),
-
-          // 2. Price Range Slider
+          const SizedBox(height: 8),
+          Divider(color: AppColors.gray700, thickness: .1, height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Price',
-                style: AppTextStyles.body1SemiBold.copyWith(
+                style: AppTextStyles.body2SemiBold.copyWith(
                   color: AppColors.gray900,
                 ),
               ),
               Text(
                 '\$${_priceRange.start.round()} - \$${_priceRange.end.round()}',
-                style: AppTextStyles.body2Regular.copyWith(
+                style: AppTextStyles.body3Regular.copyWith(
                   color: AppColors.gray500,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               activeTrackColor: AppColors.gray900,
@@ -151,26 +149,27 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               thumbColor: AppColors.white,
               overlayColor: AppColors.gray900.withValues(alpha: 0.1),
               trackHeight: 2.0,
-              rangeThumbShape: const _CustomRangeThumbShape(),
+              padding: EdgeInsets.zero,
+              rangeTrackShape: const FullWidthRangeSliderTrackShape(),
+              rangeThumbShape: const CustomRangeThumbShape(),
             ),
             child: RangeSlider(
               values: _priceRange,
               min: 0,
-              max: 500,
+              max: 1000,
               onChanged: (values) {
                 setState(() => _priceRange = values);
               },
             ),
           ),
-          const SizedBox(height: 16),
-
-          // 3. Size Dropdown Row
+          const SizedBox(height: 8),
+          Divider(color: AppColors.gray700, thickness: .1, height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Size',
-                style: AppTextStyles.body1SemiBold.copyWith(
+                style: AppTextStyles.body2SemiBold.copyWith(
                   color: AppColors.gray900,
                 ),
               ),
@@ -182,7 +181,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                     color: AppColors.gray500,
                     size: 20,
                   ),
-                  style: AppTextStyles.body1Medium.copyWith(
+                  style: AppTextStyles.body3Regular.copyWith(
                     color: AppColors.gray900,
                   ),
                   items: _sizeOptions.map((size) {
@@ -195,12 +194,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 28),
-
-          // 4. Apply Filters Action Button
           SizedBox(
             width: double.infinity,
-            height: 52,
+            height: 50,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -215,7 +211,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               ),
               child: Text(
                 'Apply Filters',
-                style: AppTextStyles.body1SemiBold.copyWith(
+                style: AppTextStyles.body2SemiBold.copyWith(
                   color: AppColors.white,
                 ),
               ),
@@ -224,38 +220,5 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
         ],
       ),
     );
-  }
-}
-
-// Minimal circular slider thumb with border
-class _CustomRangeThumbShape extends RangeSliderThumbShape {
-  const _CustomRangeThumbShape();
-
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size(18, 18);
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset center, {
-    required Animation<double> activationAnimation,
-    required Animation<double> enableAnimation,
-    bool isDiscrete = false,
-    bool isEnabled = false,
-    bool? isOnTop,
-    required SliderThemeData sliderTheme,
-    TextDirection? textDirection,
-    Thumb? thumb,
-    bool? isPressed,
-  }) {
-    final canvas = context.canvas;
-    final fillPaint = Paint()..color = AppColors.white;
-    final borderPaint = Paint()
-      ..color = AppColors.gray900
-      ..strokeWidth = 2.5
-      ..style = PaintingStyle.stroke;
-
-    canvas.drawCircle(center, 9, fillPaint);
-    canvas.drawCircle(center, 9, borderPaint);
   }
 }
