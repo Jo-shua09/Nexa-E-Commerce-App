@@ -8,8 +8,9 @@ import 'package:nexa/features/auth/presentation/screens/reset_password.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/verification_code.dart';
-import 'package:nexa/features/home/presentation/screens/home_screen.dart';
+import 'package:nexa/features/home/presentation/home_screen.dart';
 import 'package:nexa/features/notifications/presentation/notification_screen.dart';
+import 'package:nexa/features/saved/presentation/saved_screen.dart';
 import 'package:nexa/features/search/presentation/search_screen.dart';
 import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
 import 'package:nexa/features/startup/presentation/splash_screen.dart';
@@ -111,6 +112,16 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/search',
                 builder: (context, state) => const SearchScreen(),
+              ),
+            ],
+          ),
+
+          // Branch 2: Saved / Wishlist
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/saved',
+                builder: (context, state) => const SavedScreen(),
               ),
             ],
           ),

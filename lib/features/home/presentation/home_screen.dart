@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
+import 'package:nexa/features/home/presentation/widgets/filter_bottom_sheet.dart';
 import 'package:nexa/features/products/presentation/widgets/product_grid_section.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -87,8 +88,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.tune_rounded, color: AppColors.white),
+                      onPressed: () {
+                        FilterBottomSheet.show(context);
+                      },
+                      icon: const Icon(
+                        Icons.tune_rounded,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
