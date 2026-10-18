@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
-import 'package:nexa/core/widgets/cart_icon_with_badge.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/products/data/sources/dummy_products.dart';
 import 'package:nexa/features/cart/presentation/providers/cart_provider.dart';
@@ -57,7 +56,6 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
         ),
         centerTitle: true,
         actions: [
-          const CartIconWithBadge(),
           CircularIconButton(
             icon: Icons.notifications_none_rounded,
             hasBadge: true,
@@ -275,6 +273,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
+                          duration: const Duration(seconds: 4),
                           backgroundColor: AppColors.gray900,
                           behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(
@@ -291,7 +290,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                             label: 'View Cart',
                             textColor: AppColors.white,
                             onPressed: () {
-                              context.go('/cart');
+                              context.push('/cart');
                             },
                           ),
                         ),

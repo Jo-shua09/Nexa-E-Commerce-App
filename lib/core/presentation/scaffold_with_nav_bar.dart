@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/cart_icon_with_badge.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -52,7 +53,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
                 isSelected: navigationShell.currentIndex == 2,
                 onTap: () => _onTap(2),
               ),
-              _NavItem(
+              CartIconWithBadge(
                 icon: Icons.shopping_cart_outlined,
                 activeIcon: Icons.shopping_cart_rounded,
                 label: "Cart",

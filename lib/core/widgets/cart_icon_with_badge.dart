@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
+import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/features/cart/presentation/providers/cart_provider.dart';
 
 class CartIconWithBadge extends ConsumerWidget {
-  const CartIconWithBadge({super.key});
+  const CartIconWithBadge({
+    super.key,
+    required this.icon,
+    required this.activeIcon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final IconData activeIcon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,19 +28,34 @@ class CartIconWithBadge extends ConsumerWidget {
       alignment: Alignment.center,
       clipBehavior: Clip.none,
       children: [
-        IconButton(
-          tooltip: count == 0 ? 'Cart' : 'Cart, $count items',
-          icon: const Icon(
-            Icons.shopping_bag_outlined,
-            color: AppColors.gray900,
-            size: 22,
+        GestureDetector(
+          onTap: onTap,
+          behavior: HitTestBehavior.opaque,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                isSelected ? activeIcon : icon,
+                size: 22,
+                color: isSelected ? AppColors.gray900 : AppColors.gray400,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: AppTextStyles.body3SemiBold.copyWith(
+                  letterSpacing: 0.2,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                  color: isSelected ? AppColors.gray900 : AppColors.gray400,
+                ),
+              ),
+            ],
           ),
-          onPressed: () => context.go('/cart'),
         ),
         if (count > 0)
           Positioned(
-            top: 5,
-            right: 5,
+            top: -5,
+            right: -5,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
               decoration: const BoxDecoration(
