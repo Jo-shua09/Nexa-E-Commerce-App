@@ -7,10 +7,12 @@ class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback? onTap;
   final VoidCallback? onFavoriteToggle;
+  final bool isFavorite;
 
   const ProductCard({
     super.key,
     required this.product,
+    required this.isFavorite,
     this.onTap,
     this.onFavoriteToggle,
   });
@@ -80,11 +82,11 @@ class ProductCard extends StatelessWidget {
                         ],
                       ),
                       child: Icon(
-                        product.isFavorite
+                        isFavorite
                             ? Icons.favorite
                             : Icons.favorite_border_rounded,
                         size: 18,
-                        color: product.isFavorite
+                        color: isFavorite
                             ? AppColors.error
                             : AppColors.gray900,
                       ),

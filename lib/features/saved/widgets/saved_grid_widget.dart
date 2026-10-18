@@ -66,31 +66,23 @@ class SavedGridWidget extends ConsumerWidget {
                     Positioned(
                       top: 10,
                       right: 10,
-                      child: GestureDetector(
-                        onTap: () {
+                      child: IconButton(
+                        tooltip: 'Remove ${product.title} from favorites',
+                        onPressed: () {
                           ref
                               .read(savedProductsProvider.notifier)
-                              .toggleSave(product);
+                              .remove(product.id);
                         },
-                        child: Container(
-                          width: 32,
-                          height: 32,
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                blurRadius: 6,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
-                          ),
-                          child: const Icon(
-                            Icons.favorite_rounded,
-                            size: 18,
-                            color: AppColors.error,
-                          ),
+                        style: IconButton.styleFrom(
+                          backgroundColor: AppColors.white,
+                          shape: const CircleBorder(),
+                          shadowColor: Colors.black.withValues(alpha: 0.08),
+                          elevation: 3,
+                        ),
+                        icon: const Icon(
+                          Icons.favorite_rounded,
+                          size: 18,
+                          color: AppColors.error,
                         ),
                       ),
                     ),

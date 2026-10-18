@@ -6,6 +6,7 @@ import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/features/products/presentation/providers/product_providers.dart';
 import 'package:nexa/features/products/presentation/widgets/product_card.dart';
 import 'package:nexa/features/products/presentation/widgets/product_card_skeleton.dart';
+import 'package:nexa/features/saved/presentation/providers/saved_providers.dart';
 
 class ProductGridSection extends ConsumerWidget {
   const ProductGridSection({super.key, required this.selectedCategory});
@@ -39,6 +40,7 @@ class ProductGridSection extends ConsumerWidget {
         ),
       ),
       data: (products) {
+        final savedProducts = ref.watch(savedProductsProvider);
         final filteredProducts = selectedCategory == 'All'
             ? products
             : products
@@ -79,6 +81,12 @@ class ProductGridSection extends ConsumerWidget {
             final product = filteredProducts[index];
             return ProductCard(
               product: product,
+              isFavorite: savedProducts.any((saved) => saved.id == product.id),
+              onFavoriteToggle: () {
+                ref
+                    .read(savedProductsProvider.notifier)
+                    .toggleSave(product);
+              },
               onTap: () {
                 context.go('/home/product/${product.id}');
               },

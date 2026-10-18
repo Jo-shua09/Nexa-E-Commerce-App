@@ -1,20 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nexa/features/products/data/sources/dummy_products.dart';
 import 'package:nexa/features/products/domain/models/products.dart';
 
 class SavedNotifier extends Notifier<List<Product>> {
   @override
   List<Product> build() {
-    return dummyProducts.take(6).toList();
+    return const [];
+  }
+
+  void add(Product product) {
+    if (isSaved(product.id)) return;
+
+    state = [...state, product];
+  }
+
+  void remove(String productId) {
+    state = state.where((item) => item.id != productId).toList();
   }
 
   void toggleSave(Product product) {
-    final current = state;
-
-    if (current.any((item) => item.id == product.id)) {
-      state = current.where((item) => item.id != product.id).toList();
+    if (isSaved(product.id)) {
+      remove(product.id);
     } else {
-      state = [...current, product];
+      add(product);
     }
   }
 
