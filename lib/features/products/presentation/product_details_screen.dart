@@ -270,6 +270,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                           .read(cartProvider.notifier)
                           .addToCart(product, _selectedSize);
 
+                      final router = GoRouter.of(context);
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -290,7 +291,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                             label: 'View Cart',
                             textColor: AppColors.white,
                             onPressed: () {
-                              context.push('/cart');
+                              router.go('/cart');
                             },
                           ),
                         ),

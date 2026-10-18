@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/presentation/scaffold_with_nav_bar.dart';
+import 'package:nexa/features/address/presentation/address_list_screen.dart';
+import 'package:nexa/features/address/presentation/new_address_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/forgot_password.dart';
 import 'package:nexa/features/auth/presentation/screens/reset_password.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_in_screen.dart';
@@ -154,6 +156,18 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'checkout',
                     parentNavigatorKey: rootNavigatorKey,
                     builder: (context, state) => const CheckoutScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'address',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) => const AddressListScreen(),
+                      ),
+                      GoRoute(
+                        path: 'new-address',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) => const NewAddressScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),
