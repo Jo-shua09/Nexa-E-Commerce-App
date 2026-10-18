@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/cart_icon_with_badge.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/products/data/sources/dummy_products.dart';
+import 'package:nexa/features/cart/presentation/providers/cart_provider.dart';
 import 'package:nexa/features/saved/presentation/providers/saved_providers.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
@@ -55,6 +57,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
         ),
         centerTitle: true,
         actions: [
+          const CartIconWithBadge(),
           CircularIconButton(
             icon: Icons.notifications_none_rounded,
             hasBadge: true,
@@ -262,19 +265,35 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               const SizedBox(width: 28),
               Expanded(
                 child: SizedBox(
-                  height: 52,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
+                      ref
+                          .read(cartProvider.notifier)
+                          .addToCart(product, _selectedSize);
+
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
+                          backgroundColor: AppColors.gray900,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          margin: const EdgeInsets.all(16),
                           content: Text(
                             'Added ${product.title} (Size $_selectedSize) to cart',
                             style: AppTextStyles.body2Regular.copyWith(
                               color: AppColors.white,
                             ),
                           ),
-                          backgroundColor: AppColors.gray900,
-                          duration: const Duration(seconds: 2),
+                          action: SnackBarAction(
+                            label: 'View Cart',
+                            textColor: AppColors.white,
+                            onPressed: () {
+                              context.go('/cart');
+                            },
+                          ),
                         ),
                       );
                     },
@@ -297,7 +316,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         const SizedBox(width: 10),
                         Text(
                           'Add to Cart',
-                          style: AppTextStyles.body2SemiBold.copyWith(
+                          style: AppTextStyles.body1SemiBold.copyWith(
                             color: AppColors.white,
                           ),
                         ),

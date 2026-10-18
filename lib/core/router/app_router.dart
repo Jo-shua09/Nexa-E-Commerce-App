@@ -8,6 +8,8 @@ import 'package:nexa/features/auth/presentation/screens/reset_password.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/verification_code.dart';
+import 'package:nexa/features/cart/presentation/cart_screen.dart';
+import 'package:nexa/features/cart/presentation/checkout_screen.dart';
 import 'package:nexa/features/home/presentation/home_screen.dart';
 import 'package:nexa/features/notifications/presentation/notification_screen.dart';
 import 'package:nexa/features/products/presentation/product_details_screen.dart';
@@ -139,6 +141,21 @@ final routerProvider = Provider<GoRouter>((ref) {
               GoRoute(
                 path: '/saved',
                 builder: (context, state) => const SavedScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/cart',
+                builder: (context, state) => const CartScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'checkout',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const CheckoutScreen(),
+                  ),
+                ],
               ),
             ],
           ),
