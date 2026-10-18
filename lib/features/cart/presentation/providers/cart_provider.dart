@@ -106,8 +106,8 @@ final cartTotalProvider = Provider<double>((ref) {
   return subtotal + shippingFee + (subtotal * vatPercentage);
 });
 
-// Computes total items in the cart (sum of all quantities)
+// Counts distinct products, not the number of units in the cart.
 final cartItemCountProvider = Provider<int>((ref) {
   final cartItems = ref.watch(cartProvider);
-  return cartItems.fold(0, (total, item) => total + item.quantity);
+  return cartItems.map((item) => item.product.id).toSet().length;
 });
