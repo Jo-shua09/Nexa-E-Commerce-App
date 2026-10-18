@@ -86,7 +86,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              context.push('/address');
+                              context.push('/cart/checkout/address');
                             },
                             child: Text(
                               'Change',
