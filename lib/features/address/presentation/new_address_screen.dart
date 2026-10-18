@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/address/presentation/providers/address_provider.dart';
 
 class NewAddressScreen extends ConsumerStatefulWidget {
@@ -55,7 +56,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   size: 40,
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               Text(
                 'Congratulations!',
                 style: AppTextStyles.header2SemiBold.copyWith(
@@ -63,17 +64,17 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   fontSize: 22,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 4),
               Text(
                 'Your new address has been added.',
                 style: AppTextStyles.body2Regular.copyWith(
                   color: AppColors.gray500,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                height: 52,
+                height: 50,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(dialogContext, rootNavigator: true).pop();
@@ -121,7 +122,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.gray100, // Fallback for map
+      backgroundColor: AppColors.gray100,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -130,35 +131,33 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
           icon: const Icon(
             Icons.arrow_back,
             color: AppColors.gray900,
-            size: 24,
+            size: 22,
           ),
           onPressed: () => context.pop(),
         ),
         title: Text(
           'New Address',
-          style: AppTextStyles.header3SemiBold.copyWith(
+          style: AppTextStyles.header2SemiBold.copyWith(
             color: AppColors.gray900,
           ),
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.gray900,
-              size: 24,
-            ),
-            onPressed: () => context.push('/notifications'),
+          CircularIconButton(
+            icon: Icons.notifications_none_rounded,
+            hasBadge: true,
+            onTap: () {
+              context.push('/notifications');
+            },
           ),
           const SizedBox(width: 8),
         ],
       ),
       body: Stack(
         children: [
-          // 1. Map Background Placeholder
           Positioned.fill(
             child: Container(
-              color: const Color(0xFFE5E5E5), // Simulated map grey background
+              color: const Color(0xFFE5E5E5),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 120),
@@ -172,7 +171,6 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
             ),
           ),
 
-          // 2. Persistent Bottom Sheet Form
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -192,7 +190,6 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Drag Handle
                   Center(
                     child: Container(
                       width: 44,
@@ -205,14 +202,14 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   ),
                   const SizedBox(height: 14),
 
-                  // Sheet Header
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Address',
-                        style: AppTextStyles.header3SemiBold.copyWith(
+                        style: AppTextStyles.body1SemiBold.copyWith(
                           color: AppColors.gray900,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       GestureDetector(
@@ -220,14 +217,13 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                         child: const Icon(
                           Icons.close_rounded,
                           color: AppColors.gray900,
-                          size: 24,
+                          size: 22,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
 
-                  // Address Nickname Dropdown
                   Text(
                     'Address Nickname',
                     style: AppTextStyles.body2Regular.copyWith(
@@ -282,9 +278,8 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                       setState(() => _selectedNickname = value);
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 12),
 
-                  // Full Address Text Field
                   Text(
                     'Full Address',
                     style: AppTextStyles.body2Regular.copyWith(
@@ -330,7 +325,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 8),
 
                   // Set as Default Checkbox
                   GestureDetector(
@@ -376,7 +371,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   // Add Button
                   SizedBox(
                     width: double.infinity,
-                    height: 54,
+                    height: 50,
                     child: ElevatedButton(
                       onPressed: _isFormValid ? _saveAddress : null,
                       style: ElevatedButton.styleFrom(

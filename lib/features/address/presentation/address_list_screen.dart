@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
+import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/features/address/presentation/providers/address_provider.dart';
 
@@ -23,25 +24,24 @@ class AddressListScreen extends ConsumerWidget {
           icon: const Icon(
             Icons.arrow_back,
             color: AppColors.gray900,
-            size: 24,
+            size: 22,
           ),
           onPressed: () => context.pop(),
         ),
         title: Text(
           'Address',
-          style: AppTextStyles.header3SemiBold.copyWith(
+          style: AppTextStyles.header2SemiBold.copyWith(
             color: AppColors.gray900,
           ),
         ),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none_rounded,
-              color: AppColors.gray900,
-              size: 24,
-            ),
-            onPressed: () => context.push('/notifications'),
+          CircularIconButton(
+            icon: Icons.notifications_none_rounded,
+            hasBadge: true,
+            onTap: () {
+              context.push('/notifications');
+            },
           ),
           const SizedBox(width: 8),
         ],
@@ -50,18 +50,23 @@ class AddressListScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Divider(color: AppColors.gray100, thickness: 1, height: 1),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
             child: Text(
               'Saved Address',
-              style: AppTextStyles.body1SemiBold.copyWith(
+              style: AppTextStyles.body2SemiBold.copyWith(
                 color: AppColors.gray900,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              itemCount: addresses.length + 1, // +1 for the Add New button
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              itemCount: addresses.length + 1,
               separatorBuilder: (_, __) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 if (index == addresses.length) {
@@ -85,12 +90,12 @@ class AddressListScreen extends ConsumerWidget {
                       border: Border.all(
                         color: isSelected
                             ? AppColors.gray900
-                            : AppColors.gray200,
+                            : AppColors.gray100,
                         width: isSelected ? 1.5 : 1.0,
                       ),
                     ),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Icon(
                           Icons.location_on_outlined,
@@ -106,8 +111,9 @@ class AddressListScreen extends ConsumerWidget {
                                 children: [
                                   Text(
                                     address.nickname,
-                                    style: AppTextStyles.body1SemiBold.copyWith(
+                                    style: AppTextStyles.body2SemiBold.copyWith(
                                       color: AppColors.gray900,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   if (address.isDefault) ...[
@@ -133,10 +139,12 @@ class AddressListScreen extends ConsumerWidget {
                                   ],
                                 ],
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 4),
                               Text(
                                 address.fullAddress,
-                                style: AppTextStyles.body2Regular.copyWith(
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.body3Regular.copyWith(
                                   color: AppColors.gray500,
                                   height: 1.4,
                                 ),
@@ -158,7 +166,7 @@ class AddressListScreen extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
             child: SizedBox(
               width: double.infinity,
-              height: 54,
+              height: 50,
               child: ElevatedButton(
                 onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(
@@ -171,8 +179,9 @@ class AddressListScreen extends ConsumerWidget {
                 ),
                 child: Text(
                   'Apply',
-                  style: AppTextStyles.body1SemiBold.copyWith(
+                  style: AppTextStyles.body2SemiBold.copyWith(
                     color: AppColors.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -198,7 +207,7 @@ class _AddNewAddressButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.gray200, width: 1.2),
+          border: Border.all(color: AppColors.gray100, width: 1.2),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -207,8 +216,9 @@ class _AddNewAddressButton extends StatelessWidget {
             const SizedBox(width: 8),
             Text(
               'Add New Address',
-              style: AppTextStyles.body1SemiBold.copyWith(
+              style: AppTextStyles.body2SemiBold.copyWith(
                 color: AppColors.gray900,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
