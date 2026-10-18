@@ -213,7 +213,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  context.push('/cart/checkout/payment-method');
+                                },
                                 child: const Icon(
                                   Icons.edit_outlined,
                                   color: AppColors.gray600,
@@ -359,33 +361,79 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                           ref.read(cartProvider.notifier).clearCart();
                           showDialog(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              backgroundColor: AppColors.white,
+                            barrierDismissible: false,
+                            builder: (context) => Dialog(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
+                                borderRadius: BorderRadius.circular(24),
                               ),
-                              title: Text(
-                                'Order Placed!',
-                                style: AppTextStyles.header3SemiBold,
-                              ),
-                              content: Text(
-                                'Your order has been successfully placed. Thank you for shopping with Nexa.',
-                                style: AppTextStyles.body2Regular,
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    context.go('/home');
-                                  },
-                                  child: Text(
-                                    'Back to Home',
-                                    style: AppTextStyles.body2SemiBold.copyWith(
-                                      color: AppColors.gray900,
-                                    ),
-                                  ),
+                              backgroundColor: AppColors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 32,
                                 ),
-                              ],
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 64,
+                                      height: 64,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: const Color(0xFF22C55E),
+                                          width: 3,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.check_rounded,
+                                        color: Color(0xFF22C55E),
+                                        size: 40,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      'Congratulations!',
+                                      style: AppTextStyles.header2SemiBold
+                                          .copyWith(
+                                            color: AppColors.gray900,
+                                            fontSize: 22,
+                                          ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Your order has been placed.',
+                                      style: AppTextStyles.body2Regular
+                                          .copyWith(color: AppColors.gray500),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      height: 50,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          context.go('/home');
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.gray900,
+                                          foregroundColor: AppColors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              14,
+                                            ),
+                                          ),
+                                          elevation: 0,
+                                        ),
+                                        child: Text(
+                                          'Track Your Order',
+                                          style: AppTextStyles.body2SemiBold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           );
                         },

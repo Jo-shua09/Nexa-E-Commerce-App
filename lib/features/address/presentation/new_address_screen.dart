@@ -92,7 +92,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   ),
                   child: Text(
                     'Thanks',
-                    style: AppTextStyles.body1SemiBold.copyWith(
+                    style: AppTextStyles.body2SemiBold.copyWith(
                       color: AppColors.white,
                     ),
                   ),

@@ -14,6 +14,8 @@ import 'package:nexa/features/cart/presentation/cart_screen.dart';
 import 'package:nexa/features/cart/presentation/checkout_screen.dart';
 import 'package:nexa/features/home/presentation/home_screen.dart';
 import 'package:nexa/features/notifications/presentation/notification_screen.dart';
+import 'package:nexa/features/payment/presentation/new_card_screen.dart';
+import 'package:nexa/features/payment/presentation/payment_method_screen.dart';
 import 'package:nexa/features/products/presentation/product_details_screen.dart';
 import 'package:nexa/features/products/presentation/reviews_screen.dart';
 import 'package:nexa/features/saved/presentation/saved_screen.dart';
@@ -166,6 +168,19 @@ final routerProvider = Provider<GoRouter>((ref) {
                         path: 'new-address',
                         parentNavigatorKey: rootNavigatorKey,
                         builder: (context, state) => const NewAddressScreen(),
+                      ),
+                      GoRoute(
+                        path: 'payment-method',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) =>
+                            const PaymentMethodScreen(),
+                        routes: [
+                          GoRoute(
+                            path: 'new-card',
+                            parentNavigatorKey: rootNavigatorKey,
+                            builder: (context, state) => const NewCardScreen(),
+                          ),
+                        ],
                       ),
                     ],
                   ),
