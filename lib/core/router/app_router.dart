@@ -5,6 +5,9 @@ import 'package:go_router/go_router.dart';
 import 'package:nexa/core/presentation/scaffold_with_nav_bar.dart';
 import 'package:nexa/features/address/presentation/address_list_screen.dart';
 import 'package:nexa/features/address/presentation/new_address_screen.dart';
+import 'package:nexa/features/account/presentation/account_screen.dart';
+import 'package:nexa/features/orders/presentation/my_orders_screen.dart';
+import 'package:nexa/features/orders/presentation/track_order_screen.dart';
 import 'package:nexa/features/auth/presentation/screens/forgot_password.dart';
 import 'package:nexa/features/auth/presentation/screens/reset_password.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_in_screen.dart';
@@ -181,6 +184,31 @@ final routerProvider = Provider<GoRouter>((ref) {
                             builder: (context, state) => const NewCardScreen(),
                           ),
                         ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/account',
+                builder: (context, state) => const AccountScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'orders',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const MyOrdersScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'track/:orderId',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) {
+                          final orderId = state.pathParameters['orderId']!;
+                          return TrackOrderScreen(orderId: orderId);
+                        },
                       ),
                     ],
                   ),
