@@ -25,7 +25,7 @@ class TrackOrderScreen extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
         title: Text(
-          'Search',
+          'Track Order',
           style: AppTextStyles.header2SemiBold.copyWith(
             color: AppColors.gray900,
           ),
