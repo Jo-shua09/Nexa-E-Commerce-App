@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/adaptive_dropdown.dart';
 import 'package:nexa/core/widgets/CustomRangeThumbShape.dart';
 import 'package:nexa/core/widgets/full_width_range_slider_track_shape.dart';
 
@@ -173,27 +174,25 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                   color: AppColors.gray900,
                 ),
               ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  value: _selectedSize,
-                  icon: const Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.gray500,
-                    size: 20,
-                  ),
-                  style: AppTextStyles.body3Regular.copyWith(
-                    color: AppColors.gray900,
-                  ),
-                  items: _sizeOptions.map((size) {
-                    return DropdownMenuItem(value: size, child: Text(size));
-                  }).toList(),
-                  onChanged: (val) {
-                    if (val != null) setState(() => _selectedSize = val);
-                  },
+              AdaptiveDropdown<String>(
+                value: _selectedSize,
+                itemLabel: (size) => size,
+                icon: const Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppColors.gray500,
+                  size: 20,
                 ),
+                style: AppTextStyles.body3Regular.copyWith(
+                  color: AppColors.gray900,
+                ),
+                items: _sizeOptions,
+                onChanged: (val) {
+                  if (val != null) setState(() => _selectedSize = val);
+                },
               ),
             ],
           ),
+          const SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             height: 54,

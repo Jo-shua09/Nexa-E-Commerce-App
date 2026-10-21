@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/adaptive_dropdown.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
 
 class MyDetailsScreen extends StatefulWidget {
@@ -130,19 +131,17 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
             ),
 
             _buildLabel('Gender'),
-            DropdownButtonFormField<String>(
+            AdaptiveDropdown<String>(
               value: _selectedGender,
+              itemLabel: (gender) => gender,
               icon: const Icon(
                 Icons.keyboard_arrow_down_rounded,
                 color: AppColors.gray900,
               ),
               decoration: _inputDecoration(),
-              items: ['Male', 'Female', 'Other'].map((gender) {
-                return DropdownMenuItem(
-                  value: gender,
-                  child: Text(gender, style: AppTextStyles.body2Regular),
-                );
-              }).toList(),
+              style: AppTextStyles.body2Regular,
+              items: const ['Male', 'Female', 'Other'],
+              isExpanded: true,
               onChanged: (val) => setState(() => _selectedGender = val!),
             ),
 

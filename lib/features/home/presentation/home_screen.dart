@@ -32,12 +32,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: false,
         automaticallyImplyLeading: false,
         titleSpacing: 0,
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Discover",
-            style: AppTextStyles.header2SemiBold.copyWith(
-              color: AppColors.gray900,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Discover",
+              style: AppTextStyles.header2SemiBold.copyWith(
+                color: AppColors.gray900,
+              ),
             ),
           ),
         ),

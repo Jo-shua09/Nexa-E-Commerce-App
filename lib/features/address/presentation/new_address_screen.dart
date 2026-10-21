@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/core/widgets/adaptive_dropdown.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/address/presentation/providers/address_provider.dart';
 
@@ -232,8 +233,9 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    DropdownButtonFormField<String>(
-                      initialValue: _selectedNickname,
+                    AdaptiveDropdown<String>(
+                      value: _selectedNickname,
+                      itemLabel: (name) => name,
                       icon: const Icon(
                         Icons.keyboard_arrow_down_rounded,
                         color: AppColors.gray900,
@@ -269,12 +271,9 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                           ),
                         ),
                       ),
-                      items: _nicknames.map((name) {
-                        return DropdownMenuItem(
-                          value: name,
-                          child: Text(name, style: AppTextStyles.body2Regular),
-                        );
-                      }).toList(),
+                      style: AppTextStyles.body2Regular,
+                      items: _nicknames,
+                      isExpanded: true,
                       onChanged: (value) {
                         setState(() => _selectedNickname = value);
                       },
