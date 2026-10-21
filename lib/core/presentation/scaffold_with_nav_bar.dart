@@ -26,53 +26,55 @@ class ScaffoldWithNavBar extends ConsumerWidget {
       backgroundColor: AppColors.background,
       body: navigationShell,
       bottomNavigationBar: Container(
-        height: 72,
         decoration: const BoxDecoration(
           color: AppColors.white,
           border: Border(top: BorderSide(color: AppColors.gray100, width: 1.0)),
         ),
         child: SafeArea(
           top: false,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _NavItem(
-                icon: Icons.home_outlined,
-                activeIcon: Icons.home_filled,
-                label: "Home",
-                isSelected: navigationShell.currentIndex == 0,
-                onTap: () => _onTap(0),
-              ),
-              _NavItem(
-                icon: Icons.search_rounded,
-                activeIcon: Icons.search_rounded,
-                label: "Search",
-                isSelected: navigationShell.currentIndex == 1,
-                onTap: () => _onTap(1),
-              ),
-              _NavItem(
-                icon: Icons.favorite_border_rounded,
-                activeIcon: Icons.favorite_rounded,
-                label: "Saved",
-                isSelected: navigationShell.currentIndex == 2,
-                onTap: () => _onTap(2),
-                badgeCount: savedCount,
-              ),
-              CartIconWithBadge(
-                icon: Icons.shopping_cart_outlined,
-                activeIcon: Icons.shopping_cart_rounded,
-                label: "Cart",
-                isSelected: navigationShell.currentIndex == 3,
-                onTap: () => _onTap(3),
-              ),
-              _NavItem(
-                icon: Icons.account_circle_outlined,
-                activeIcon: Icons.account_circle_rounded,
-                label: "Account",
-                isSelected: navigationShell.currentIndex == 4,
-                onTap: () => _onTap(4),
-              ),
-            ],
+          child: SizedBox(
+            height: 72,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _NavItem(
+                  icon: Icons.home_outlined,
+                  activeIcon: Icons.home_filled,
+                  label: "Home",
+                  isSelected: navigationShell.currentIndex == 0,
+                  onTap: () => _onTap(0),
+                ),
+                _NavItem(
+                  icon: Icons.search_rounded,
+                  activeIcon: Icons.search_rounded,
+                  label: "Search",
+                  isSelected: navigationShell.currentIndex == 1,
+                  onTap: () => _onTap(1),
+                ),
+                _NavItem(
+                  icon: Icons.favorite_border_rounded,
+                  activeIcon: Icons.favorite_rounded,
+                  label: "Saved",
+                  isSelected: navigationShell.currentIndex == 2,
+                  onTap: () => _onTap(2),
+                  badgeCount: savedCount,
+                ),
+                CartIconWithBadge(
+                  icon: Icons.shopping_cart_outlined,
+                  activeIcon: Icons.shopping_cart_rounded,
+                  label: "Cart",
+                  isSelected: navigationShell.currentIndex == 3,
+                  onTap: () => _onTap(3),
+                ),
+                _NavItem(
+                  icon: Icons.account_circle_outlined,
+                  activeIcon: Icons.account_circle_rounded,
+                  label: "Account",
+                  isSelected: navigationShell.currentIndex == 4,
+                  onTap: () => _onTap(4),
+                ),
+              ],
+            ),
           ),
         ),
       ),

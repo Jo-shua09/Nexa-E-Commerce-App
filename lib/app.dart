@@ -14,6 +14,13 @@ class NexaApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Nexa',
       debugShowCheckedModeBanner: false,
+      builder: (context, child) => Align(
+        alignment: Alignment.topCenter,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: child,
+        ),
+      ),
 
       // Inject your crisp light theme
       theme: AppTheme.lightTheme,

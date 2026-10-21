@@ -12,12 +12,14 @@ class SavedGridWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final width = MediaQuery.sizeOf(context).width;
+
     return GridView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       physics: const BouncingScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.70,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: width >= 520 ? 3 : 2,
+        childAspectRatio: width < 360 ? 0.67 : 0.70,
         crossAxisSpacing: 16,
         mainAxisSpacing: 20,
       ),

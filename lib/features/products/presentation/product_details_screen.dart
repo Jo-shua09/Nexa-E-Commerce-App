@@ -24,6 +24,8 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final imageHeight = (MediaQuery.sizeOf(context).width * 0.92)
+        .clamp(300.0, 420.0);
     // Find the product from dummyProducts or fallback to the first item
     final product = dummyProducts.firstWhere(
       (p) => p.id == widget.productId,
@@ -75,7 +77,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
             Stack(
               children: [
                 Container(
-                  height: 380,
+                  height: imageHeight,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: AppColors.gray100,

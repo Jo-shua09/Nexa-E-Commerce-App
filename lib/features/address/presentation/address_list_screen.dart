@@ -162,26 +162,29 @@ class AddressListScreen extends ConsumerWidget {
             ),
           ),
           // Bottom Apply Button
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
-            child: SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: ElevatedButton(
-                onPressed: () => context.pop(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.gray900,
-                  foregroundColor: AppColors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 12),
+              child: SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton(
+                  onPressed: () => context.pop(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.gray900,
+                    foregroundColor: AppColors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    elevation: 0,
                   ),
-                  elevation: 0,
-                ),
-                child: Text(
-                  'Apply',
-                  style: AppTextStyles.body2SemiBold.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
+                  child: Text(
+                    'Apply',
+                    style: AppTextStyles.body2SemiBold.copyWith(
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

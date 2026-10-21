@@ -16,6 +16,7 @@ class OnboardingScreen extends ConsumerWidget {
           builder: (context, constraints) {
             final screenWidth = constraints.maxWidth;
             final screenHeight = constraints.maxHeight;
+            final titleFontSize = (screenWidth * 0.15).clamp(42.0, 58.0);
 
             return Stack(
               children: [
@@ -35,11 +36,11 @@ class OnboardingScreen extends ConsumerWidget {
                   top: 16,
                   left: 20,
                   width: screenWidth * 0.88,
-                  child: const Text(
+                  child: Text(
                     'Define\nyourself in\nyour unique\nway.',
                     style: TextStyle(
                       fontFamily: 'Bricolage Grotesque',
-                      fontSize: 58,
+                      fontSize: titleFontSize,
                       fontWeight: FontWeight.w700,
                       height: 0.80,
                       letterSpacing: -1.0,
@@ -51,8 +52,8 @@ class OnboardingScreen extends ConsumerWidget {
                 Positioned(
                   right: 0,
                   width: screenWidth * .95,
-                  height: 500,
-                  bottom: 96,
+                  height: screenHeight * 0.68,
+                  bottom: 90,
                   child: Image.asset(
                     "assets/images/onboarding.png",
                     fit: BoxFit.cover,
@@ -62,7 +63,7 @@ class OnboardingScreen extends ConsumerWidget {
                 Positioned(
                   left: 20,
                   right: 20,
-                  bottom: 20,
+                  bottom: 12,
                   height: 54,
                   child: ElevatedButton(
                     onPressed: () {

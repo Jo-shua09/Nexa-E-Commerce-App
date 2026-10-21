@@ -13,13 +13,14 @@ class ForgotPassword extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
             GestureDetector(
               onTap: () {
                 context.pop();
@@ -68,7 +69,8 @@ class ForgotPassword extends ConsumerWidget {
                 ),
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

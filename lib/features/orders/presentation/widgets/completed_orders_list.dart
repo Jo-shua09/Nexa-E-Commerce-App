@@ -228,138 +228,138 @@ class _LeaveReviewSheetState extends State<_LeaveReviewSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Center(
-            child: Container(
-              width: 44,
-              height: 4,
-              decoration: BoxDecoration(
-                color: AppColors.gray200,
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Leave a Review',
-                style: AppTextStyles.header3SemiBold.copyWith(
-                  color: AppColors.gray900,
+            Center(
+              child: Container(
+                width: 44,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: AppColors.gray200,
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: const Icon(
-                  Icons.close_rounded,
-                  color: AppColors.gray900,
-                  size: 22,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'How was your order?',
-            style: AppTextStyles.body2SemiBold.copyWith(
-              color: AppColors.gray900,
-              fontWeight: FontWeight.bold,
             ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Please give your rating and also your review.',
-            style: AppTextStyles.body2Regular.copyWith(
-              color: AppColors.gray500,
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Star Selector
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) {
-              return GestureDetector(
-                onTap: () => setState(() => _selectedRating = index + 1),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Icon(
-                    Icons.star_rounded,
-                    size: 40,
-                    color: index < _selectedRating
-                        ? const Color(0xFFFFB800)
-                        : AppColors.gray200,
+            const SizedBox(height: 14),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Leave a Review',
+                  style: AppTextStyles.header3SemiBold.copyWith(
+                    color: AppColors.gray900,
                   ),
                 ),
-              );
-            }),
-          ),
-          const SizedBox(height: 16),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.close_rounded,
+                    color: AppColors.gray900,
+                    size: 22,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'How was your order?',
+              style: AppTextStyles.body2SemiBold.copyWith(
+                color: AppColors.gray900,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              'Please give your rating and also your review.',
+              style: AppTextStyles.body2Regular.copyWith(
+                color: AppColors.gray500,
+              ),
+            ),
+            const SizedBox(height: 16),
 
-          // Review Text Area
-          TextField(
-            maxLines: 4,
-            style: AppTextStyles.body2Regular.copyWith(
-              color: AppColors.gray900,
+            // Star Selector
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return GestureDetector(
+                  onTap: () => setState(() => _selectedRating = index + 1),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Icon(
+                      Icons.star_rounded,
+                      size: 40,
+                      color: index < _selectedRating
+                          ? const Color(0xFFFFB800)
+                          : AppColors.gray200,
+                    ),
+                  ),
+                );
+              }),
             ),
-            decoration: InputDecoration(
-              hintText: 'Write your review...',
-              hintStyle: AppTextStyles.body2Regular.copyWith(
-                color: AppColors.gray400,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.gray200,
-                  width: 1.2,
-                ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.gray200,
-                  width: 1.2,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(
-                  color: AppColors.gray900,
-                  width: 1.2,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
+            const SizedBox(height: 16),
 
-          // Submit Button
-          SizedBox(
-            width: double.infinity,
-            height: 54,
-            child: ElevatedButton(
-              onPressed: _selectedRating > 0
-                  ? () {
-                      widget.ref
-                          .read(completedOrdersProvider.notifier)
-                          .submitReview(
-                            widget.orderId,
-                            _selectedRating.toDouble(),
-                          );
-                      Navigator.pop(context);
-                    }
-                  : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.gray900,
-                disabledBackgroundColor: AppColors.gray200,
-                foregroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                elevation: 0,
+            // Review Text Area
+            TextField(
+              maxLines: 4,
+              style: AppTextStyles.body2Regular.copyWith(
+                color: AppColors.gray900,
               ),
-              child: Text('Submit', style: AppTextStyles.body2SemiBold),
+              decoration: InputDecoration(
+                hintText: 'Write your review...',
+                hintStyle: AppTextStyles.body2Regular.copyWith(
+                  color: AppColors.gray400,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: AppColors.gray200,
+                    width: 1.2,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: AppColors.gray200,
+                    width: 1.2,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: AppColors.gray900,
+                    width: 1.2,
+                  ),
+                ),
+              ),
             ),
-          ),
+            const SizedBox(height: 24),
+
+            // Submit Button
+            SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: ElevatedButton(
+                onPressed: _selectedRating > 0
+                    ? () {
+                        widget.ref
+                            .read(completedOrdersProvider.notifier)
+                            .submitReview(
+                              widget.orderId,
+                              _selectedRating.toDouble(),
+                            );
+                        Navigator.pop(context);
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.gray900,
+                  disabledBackgroundColor: AppColors.gray200,
+                  foregroundColor: AppColors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  elevation: 0,
+                ),
+                child: Text('Submit', style: AppTextStyles.body2SemiBold),
+              ),
+            ),
           ],
         ),
       ),

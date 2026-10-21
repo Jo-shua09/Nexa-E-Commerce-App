@@ -16,87 +16,89 @@ class VerificationCode extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                context.pop();
-              },
-              child: Icon(Icons.arrow_back_rounded, size: 20),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              "Enter 4 Digit Code",
-              style: AppTextStyles.header2SemiBold.copyWith(
-                color: AppColors.gray900,
-                fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  context.pop();
+                },
+                child: Icon(Icons.arrow_back_rounded, size: 20),
               ),
-            ),
-            Text(
-              "Enter 4 digit code that you received on your email (email). ",
-              style: AppTextStyles.body3Regular.copyWith(
-                color: AppColors.gray400,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(
-                4,
-                (index) => SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    textAlign: TextAlign.center,
-                    inputFormatters: [LengthLimitingTextInputFormatter(1)],
-                  ),
+              const SizedBox(height: 12),
+              Text(
+                "Enter 4 Digit Code",
+                style: AppTextStyles.header2SemiBold.copyWith(
+                  color: AppColors.gray900,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Center(
-              child: Text.rich(
-                TextSpan(
-                  text: "Email not received? ",
-                  style: AppTextStyles.body3Regular.copyWith(
-                    color: AppColors.gray500,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "Resend code",
-                      style: linkStyle,
-                      recognizer: TapGestureRecognizer()..onTap = () {},
+              Text(
+                "Enter 4 digit code that you received on your email (email). ",
+                style: AppTextStyles.body3Regular.copyWith(
+                  color: AppColors.gray400,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(
+                  4,
+                  (index) => SizedBox(
+                    width: 60,
+                    height: 60,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [LengthLimitingTextInputFormatter(1)],
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 54,
-              child: ElevatedButton(
-                onPressed: isButtonActive
-                    ? () {
-                        context.push('/reset-password');
-                      }
-                    : null,
-                child: Text(
-                  "Continue",
-                  style: AppTextStyles.body3SemiBold.copyWith(
-                    color: AppColors.white,
                   ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 12),
+              Center(
+                child: Text.rich(
+                  TextSpan(
+                    text: "Email not received? ",
+                    style: AppTextStyles.body3Regular.copyWith(
+                      color: AppColors.gray500,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "Resend code",
+                        style: linkStyle,
+                        recognizer: TapGestureRecognizer()..onTap = () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                height: 54,
+                child: ElevatedButton(
+                  onPressed: isButtonActive
+                      ? () {
+                          context.push('/reset-password');
+                        }
+                      : null,
+                  child: Text(
+                    "Continue",
+                    style: AppTextStyles.body3SemiBold.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

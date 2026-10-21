@@ -16,17 +16,19 @@ class ProductGridSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(productsProvider);
+    final width = MediaQuery.sizeOf(context).width;
+    final gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: width >= 520 ? 3 : 2,
+      childAspectRatio: width < 360 ? 0.62 : 0.65,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 20,
+    );
 
     return productsAsync.when(
       loading: () => GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.65,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 20,
-        ),
+        gridDelegate: gridDelegate,
         itemCount: 4,
         itemBuilder: (context, index) => const ProductCardSkeleton(),
       ),
@@ -70,12 +72,7 @@ class ProductGridSection extends ConsumerWidget {
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.65,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 20,
-          ),
+          gridDelegate: gridDelegate,
           itemCount: filteredProducts.length,
           itemBuilder: (context, index) {
             final product = filteredProducts[index];

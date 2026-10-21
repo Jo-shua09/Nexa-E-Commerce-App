@@ -174,24 +174,28 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
 
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    offset: Offset(0, -2),
+            child: SafeArea(
+              top: false,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(24),
                   ),
-                ],
-              ),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, -2),
+                    ),
+                  ],
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                     Center(
                       child: Container(
                         width: 44,
@@ -387,7 +391,8 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                         child: Text('Add', style: AppTextStyles.body1SemiBold),
                       ),
                     ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
