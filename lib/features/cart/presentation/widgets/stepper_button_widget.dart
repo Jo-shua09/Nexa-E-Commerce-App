@@ -68,13 +68,26 @@ class _StepperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onTap,
-      tooltip: tooltip,
-      visualDensity: VisualDensity.compact,
-      padding: EdgeInsets.zero,
-      constraints: const BoxConstraints.tightFor(width: 28, height: 28),
-      icon: Icon(icon, size: 16),
+    return Semantics(
+      button: true,
+      label: tooltip,
+      child: Tooltip(
+        message: tooltip,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(4),
+            child: SizedBox(
+              width: 36,
+              height: 36,
+              child: Center(
+                child: Icon(icon, size: 18, color: AppColors.gray900),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

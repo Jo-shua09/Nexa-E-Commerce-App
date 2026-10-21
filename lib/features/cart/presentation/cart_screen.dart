@@ -73,7 +73,7 @@ class CartScreen extends ConsumerWidget {
 
                         return Container(
                           margin: const EdgeInsets.only(bottom: 10),
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(12),
@@ -85,8 +85,8 @@ class CartScreen extends ConsumerWidget {
                           child: Row(
                             children: [
                               Container(
-                                width: 70,
-                                height: 70,
+                                width: 68,
+                                height: 68,
                                 decoration: BoxDecoration(
                                   color: AppColors.gray100,
                                   borderRadius: BorderRadius.circular(8),
@@ -125,7 +125,7 @@ class CartScreen extends ConsumerWidget {
                                         Expanded(
                                           child: Text(
                                             item.product.title,
-                                            maxLines: 1,
+                                            maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: AppTextStyles.body3SemiBold
                                                 .copyWith(
@@ -161,18 +161,21 @@ class CartScreen extends ConsumerWidget {
                                       style: AppTextStyles.body3Regular
                                           .copyWith(color: AppColors.gray400),
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 8),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          '\$ ${item.product.price.toStringAsFixed(0)}',
-                                          style: AppTextStyles.body2SemiBold
-                                              .copyWith(
-                                                color: AppColors.gray900,
-                                              ),
+                                        Expanded(
+                                          child: Text(
+                                            '\$ ${item.product.price.toStringAsFixed(0)}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppTextStyles.body2SemiBold
+                                                .copyWith(
+                                                  color: AppColors.gray900,
+                                                ),
+                                          ),
                                         ),
+                                        const SizedBox(width: 8),
                                         StepperButtonWidget(
                                           quantity: item.quantity,
                                           onDecrement: () => ref
@@ -236,7 +239,7 @@ class CartScreen extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
                   child: SizedBox(
                     width: double.infinity,
-                    height: 50,
+                    height: 54,
                     child: ElevatedButton(
                       onPressed: () => context.push('/cart/checkout'),
                       style: ElevatedButton.styleFrom(

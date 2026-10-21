@@ -355,7 +355,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 50,
+                      height: 54,
                       child: ElevatedButton(
                         onPressed: () {
                           ref.read(cartProvider.notifier).clearCart();
@@ -409,7 +409,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                     const SizedBox(height: 20),
                                     SizedBox(
                                       width: double.infinity,
-                                      height: 50,
+                                      height: 54,
                                       child: ElevatedButton(
                                         onPressed: () {
                                           Navigator.pop(context);

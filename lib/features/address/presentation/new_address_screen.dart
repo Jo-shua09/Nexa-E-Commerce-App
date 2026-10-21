@@ -74,7 +74,7 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 54,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(dialogContext, rootNavigator: true).pop();
@@ -186,208 +186,210 @@ class _NewAddressScreenState extends ConsumerState<NewAddressScreen> {
                   ),
                 ],
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Container(
-                      width: 44,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: AppColors.gray200,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Address',
-                        style: AppTextStyles.body1SemiBold.copyWith(
-                          color: AppColors.gray900,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => context.pop(),
-                        child: const Icon(
-                          Icons.close_rounded,
-                          color: AppColors.gray900,
-                          size: 22,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  Text(
-                    'Address Nickname',
-                    style: AppTextStyles.body2Regular.copyWith(
-                      color: AppColors.gray900,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  DropdownButtonFormField<String>(
-                    value: _selectedNickname,
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppColors.gray900,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Choose one',
-                      hintStyle: AppTextStyles.body2Regular.copyWith(
-                        color: AppColors.gray400,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 44,
+                        height: 4,
+                        decoration: BoxDecoration(
                           color: AppColors.gray200,
-                          width: 1.2,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.gray200,
-                          width: 1.2,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.gray900,
-                          width: 1.2,
+                          borderRadius: BorderRadius.circular(2),
                         ),
                       ),
                     ),
-                    items: _nicknames.map((name) {
-                      return DropdownMenuItem(
-                        value: name,
-                        child: Text(name, style: AppTextStyles.body2Regular),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() => _selectedNickname = value);
-                    },
-                  ),
-                  const SizedBox(height: 12),
+                    const SizedBox(height: 14),
 
-                  Text(
-                    'Full Address',
-                    style: AppTextStyles.body2Regular.copyWith(
-                      color: AppColors.gray900,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    controller: _addressController,
-                    onChanged: (_) => setState(() {}),
-                    style: AppTextStyles.body2Regular.copyWith(
-                      color: AppColors.gray900,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Enter your full address...',
-                      hintStyle: AppTextStyles.body2Regular.copyWith(
-                        color: AppColors.gray400,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.gray200,
-                          width: 1.2,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.gray200,
-                          width: 1.2,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(
-                          color: AppColors.gray900,
-                          width: 1.2,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Set as Default Checkbox
-                  GestureDetector(
-                    onTap: () => setState(() => _isDefault = !_isDefault),
-                    behavior: HitTestBehavior.opaque,
-                    child: Row(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: _isDefault
-                                ? AppColors.gray900
-                                : AppColors.white,
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              color: _isDefault
-                                  ? AppColors.gray900
-                                  : AppColors.gray300,
-                              width: 1.5,
-                            ),
-                          ),
-                          child: _isDefault
-                              ? const Icon(
-                                  Icons.check,
-                                  size: 14,
-                                  color: AppColors.white,
-                                )
-                              : null,
-                        ),
-                        const SizedBox(width: 12),
                         Text(
-                          'Make this as a default address',
-                          style: AppTextStyles.body2Regular.copyWith(
-                            color: AppColors.gray500,
+                          'Address',
+                          style: AppTextStyles.body1SemiBold.copyWith(
+                            color: AppColors.gray900,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => context.pop(),
+                          child: const Icon(
+                            Icons.close_rounded,
+                            color: AppColors.gray900,
+                            size: 22,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 28),
+                    const SizedBox(height: 16),
 
-                  // Add Button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: _isFormValid ? _saveAddress : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.gray900,
-                        disabledBackgroundColor: AppColors.gray200,
-                        foregroundColor: AppColors.white,
-                        disabledForegroundColor: AppColors.gray400,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        elevation: 0,
+                    Text(
+                      'Address Nickname',
+                      style: AppTextStyles.body2Regular.copyWith(
+                        color: AppColors.gray900,
                       ),
-                      child: Text('Add', style: AppTextStyles.body1SemiBold),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      initialValue: _selectedNickname,
+                      icon: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: AppColors.gray900,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Choose one',
+                        hintStyle: AppTextStyles.body2Regular.copyWith(
+                          color: AppColors.gray400,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray200,
+                            width: 1.2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray200,
+                            width: 1.2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray900,
+                            width: 1.2,
+                          ),
+                        ),
+                      ),
+                      items: _nicknames.map((name) {
+                        return DropdownMenuItem(
+                          value: name,
+                          child: Text(name, style: AppTextStyles.body2Regular),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() => _selectedNickname = value);
+                      },
+                    ),
+                    const SizedBox(height: 12),
+
+                    Text(
+                      'Full Address',
+                      style: AppTextStyles.body2Regular.copyWith(
+                        color: AppColors.gray900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _addressController,
+                      onChanged: (_) => setState(() {}),
+                      style: AppTextStyles.body2Regular.copyWith(
+                        color: AppColors.gray900,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Enter your full address...',
+                        hintStyle: AppTextStyles.body2Regular.copyWith(
+                          color: AppColors.gray400,
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray200,
+                            width: 1.2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray200,
+                            width: 1.2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: AppColors.gray900,
+                            width: 1.2,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Set as Default Checkbox
+                    GestureDetector(
+                      onTap: () => setState(() => _isDefault = !_isDefault),
+                      behavior: HitTestBehavior.opaque,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: _isDefault
+                                  ? AppColors.gray900
+                                  : AppColors.white,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(
+                                color: _isDefault
+                                    ? AppColors.gray900
+                                    : AppColors.gray300,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: _isDefault
+                                ? const Icon(
+                                    Icons.check,
+                                    size: 14,
+                                    color: AppColors.white,
+                                  )
+                                : null,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Make this as a default address',
+                            style: AppTextStyles.body2Regular.copyWith(
+                              color: AppColors.gray500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 28),
+
+                    // Add Button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 54,
+                      child: ElevatedButton(
+                        onPressed: _isFormValid ? _saveAddress : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.gray900,
+                          disabledBackgroundColor: AppColors.gray200,
+                          foregroundColor: AppColors.white,
+                          disabledForegroundColor: AppColors.gray400,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Text('Add', style: AppTextStyles.body1SemiBold),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

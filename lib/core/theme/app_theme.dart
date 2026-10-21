@@ -53,7 +53,7 @@ class AppTheme {
           disabledForegroundColor: AppColors.gray300,
           textStyle: AppTextStyles.body2SemiBold,
           alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

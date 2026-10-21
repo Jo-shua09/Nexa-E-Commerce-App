@@ -142,7 +142,7 @@ class PaymentMethodScreen extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 24),
             child: SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(
@@ -230,7 +230,7 @@ class _AddNewCardButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 50,
+        height: 54,
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(12),

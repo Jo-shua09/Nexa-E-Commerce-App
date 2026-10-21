@@ -166,7 +166,7 @@ class AddressListScreen extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(20, 10, 20, 32),
             child: SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(

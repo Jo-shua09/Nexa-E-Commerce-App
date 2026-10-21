@@ -74,7 +74,7 @@ class _NewCardScreenState extends ConsumerState<NewCardScreen> {
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 54,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -244,7 +244,7 @@ class _NewCardScreenState extends ConsumerState<NewCardScreen> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
               child: SizedBox(
                 width: double.infinity,
-                height: 50,
+                height: 54,
                 child: ElevatedButton(
                   onPressed: _isFormValid ? _saveCard : null,
                   style: ElevatedButton.styleFrom(

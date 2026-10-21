@@ -263,7 +263,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
               const SizedBox(width: 28),
               Expanded(
                 child: SizedBox(
-                  height: 50,
+                  height: 54,
                   child: ElevatedButton(
                     onPressed: () {
                       ref

@@ -29,9 +29,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -108,7 +109,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: isButtonActive
                     ? () {
@@ -155,7 +156,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             const SizedBox(height: 18),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.white,
@@ -166,8 +167,15 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //!! Google Logo here
-                    const SizedBox(height: 12),
+                    const Text(
+                      'G',
+                      style: TextStyle(
+                        color: AppColors.gray900,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
                     Text(
                       "Sign In with Google",
                       style: AppTextStyles.body3SemiBold.copyWith(
@@ -181,19 +189,23 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  side: BorderSide(color: Colors.blueAccent),
+                    backgroundColor: const Color(0xFF1877F2),
+                    side: const BorderSide(color: Color(0xFF1877F2)),
                 ),
                 onPressed: () {},
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //!! Facebook Logo here
-                    const SizedBox(height: 12),
+                    const Icon(
+                      Icons.facebook_rounded,
+                      color: AppColors.white,
+                      size: 22,
+                    ),
+                    const SizedBox(width: 10),
                     Text(
                       "Sign In with Facebook",
                       style: AppTextStyles.body3SemiBold.copyWith(
@@ -204,7 +216,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(height: 12),
             Center(
               child: Text.rich(
                 TextSpan(

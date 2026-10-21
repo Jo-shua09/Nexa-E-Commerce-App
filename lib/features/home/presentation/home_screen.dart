@@ -29,6 +29,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        centerTitle: false,
         title: Text(
           "Discover",
           style: AppTextStyles.header2SemiBold.copyWith(
@@ -81,7 +82,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 const SizedBox(width: 6),
                 SizedBox(
                   height: 48,
-                  width: 50,
+                  width: 54,
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.gray900,

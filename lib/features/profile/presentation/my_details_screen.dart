@@ -201,7 +201,7 @@ class _MyDetailsScreenState extends State<MyDetailsScreen> {
 
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(

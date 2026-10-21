@@ -86,7 +86,7 @@ class CustomerServiceChatScreen extends StatelessWidget {
                 _ChatBubble(
                   text: 'Can you help me?',
                   isSender: true,
-                  time: '10:50 pm',
+                  time: '10:54 pm',
                 ),
                 _ChatBubble(text: 'Of course...', isSender: false),
                 _ChatBubble(
@@ -111,7 +111,7 @@ class CustomerServiceChatScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Container(
-                    height: 50,
+                    height: 54,
                     decoration: BoxDecoration(
                       color: AppColors.white,
                       borderRadius: BorderRadius.circular(12),

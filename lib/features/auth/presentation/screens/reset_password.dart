@@ -20,9 +20,10 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -102,10 +103,10 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                 ),
               ),
             ),
-            const Spacer(),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: isButtonActive
                     ? () {
@@ -148,7 +149,7 @@ class _ResetPasswordState extends ConsumerState<ResetPassword> {
                                       const SizedBox(height: 16),
                                       SizedBox(
                                         width: double.infinity,
-                                        height: 50,
+                                        height: 54,
                                         child: ElevatedButton(
                                           onPressed: isButtonActive
                                               ? () {

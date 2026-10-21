@@ -63,7 +63,7 @@ class OnboardingScreen extends ConsumerWidget {
                   left: 20,
                   right: 20,
                   bottom: 20,
-                  height: 50,
+                  height: 54,
                   child: ElevatedButton(
                     onPressed: () {
                       context.go('/sign-up');

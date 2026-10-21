@@ -21,7 +21,13 @@ class AccountScreen extends StatelessWidget {
             color: AppColors.gray900,
             size: 22,
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/home');
+            }
+          },
         ),
         title: Text(
           'Account',
@@ -62,7 +68,7 @@ class AccountScreen extends StatelessWidget {
           _AccountMenuItem(
             icon: Icons.payment_outlined,
             title: 'Payment Methods',
-            onTap: () => context.push('/cart/checkout/payment'),
+            onTap: () => context.push('/cart/checkout/payment-method'),
           ),
           _AccountMenuItem(
             icon: Icons.notifications_none_rounded,
@@ -136,7 +142,7 @@ class AccountScreen extends StatelessWidget {
 
                         SizedBox(
                           width: double.infinity,
-                          height: 50,
+                          height: 54,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -162,7 +168,7 @@ class AccountScreen extends StatelessWidget {
 
                         SizedBox(
                           width: double.infinity,
-                          height: 50,
+                          height: 54,
                           child: OutlinedButton(
                             onPressed: () => Navigator.pop(context),
                             style: OutlinedButton.styleFrom(
@@ -234,7 +240,8 @@ class _AccountMenuItem extends StatelessWidget {
                 ),
           onTap: onTap,
         ),
-        const Divider(color: AppColors.gray100, thickness: 1, height: 1),
+        if (!isLogout)
+          const Divider(color: AppColors.gray100, thickness: 1, height: 1),
       ],
     );
   }

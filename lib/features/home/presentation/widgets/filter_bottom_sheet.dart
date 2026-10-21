@@ -196,7 +196,7 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
           ),
           SizedBox(
             width: double.infinity,
-            height: 50,
+            height: 54,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);

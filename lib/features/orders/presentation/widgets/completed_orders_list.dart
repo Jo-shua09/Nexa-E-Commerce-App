@@ -223,10 +223,11 @@ class _LeaveReviewSheetState extends State<_LeaveReviewSheet> {
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
           Center(
             child: Container(
               width: 44,
@@ -334,7 +335,7 @@ class _LeaveReviewSheetState extends State<_LeaveReviewSheet> {
           // Submit Button
           SizedBox(
             width: double.infinity,
-            height: 50,
+            height: 54,
             child: ElevatedButton(
               onPressed: _selectedRating > 0
                   ? () {
@@ -359,7 +360,8 @@ class _LeaveReviewSheetState extends State<_LeaveReviewSheet> {
               child: Text('Submit', style: AppTextStyles.body2SemiBold),
             ),
           ),
-        ],
+          ],
+        ),
       ),
     );
   }

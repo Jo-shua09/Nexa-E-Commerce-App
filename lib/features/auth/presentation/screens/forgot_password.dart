@@ -13,9 +13,10 @@ class ForgotPassword extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -49,10 +50,10 @@ class ForgotPassword extends ConsumerWidget {
             const SizedBox(height: 4),
             TextField(keyboardType: TextInputType.emailAddress),
 
-            const Spacer(),
+            const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
                 onPressed: isButtonActive
                     ? () {
