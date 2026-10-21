@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nexa/features/cart/presentation/cart_screen.dart';
 import 'package:nexa/features/cart/presentation/checkout_screen.dart';
-import 'package:nexa/features/cart/presentation/providers/cart_provider.dart';
 
 void main() {
   testWidgets('cart quantity controls update without recursive rendering', (

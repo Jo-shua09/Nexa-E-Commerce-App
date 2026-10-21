@@ -24,8 +24,10 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final imageHeight = (MediaQuery.sizeOf(context).width * 0.92)
-        .clamp(300.0, 420.0);
+    final imageHeight = (MediaQuery.sizeOf(context).width * 0.92).clamp(
+      300.0,
+      420.0,
+    );
     // Find the product from dummyProducts or fallback to the first item
     final product = dummyProducts.firstWhere(
       (p) => p.id == widget.productId,
@@ -89,7 +91,7 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                         ? Image.network(
                             product.images.first,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => const Icon(
+                            errorBuilder: (_, _, _) => const Icon(
                               Icons.image_not_supported_outlined,
                               color: AppColors.gray400,
                               size: 40,

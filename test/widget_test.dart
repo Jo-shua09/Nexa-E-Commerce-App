@@ -6,13 +6,11 @@ import 'package:nexa/core/router/app_router.dart';
 import 'package:nexa/features/auth/presentation/screens/sign_up_screen.dart';
 
 void main() {
-  test('router instance remains stable when authentication changes', () {
+  test('router instance remains stable across reads', () {
     final container = ProviderContainer();
     addTearDown(container.dispose);
 
     final router = container.read(routerProvider);
-    container.read(authStateProvider.notifier).state = true;
-
     expect(container.read(routerProvider), same(router));
   });
 

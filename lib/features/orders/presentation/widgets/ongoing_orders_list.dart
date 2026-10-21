@@ -6,7 +6,7 @@ import 'package:nexa/features/orders/presentation/providers/order_provider.dart'
 
 class OngoingOrdersList extends StatelessWidget {
   final List<OrderModel> orders;
-  const OngoingOrdersList({required this.orders});
+  const OngoingOrdersList({super.key, required this.orders});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class OngoingOrdersList extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
       physics: const BouncingScrollPhysics(),
       itemCount: orders.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
+      separatorBuilder: (_, _) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final order = orders[index];
         final hasImage = order.product.images.isNotEmpty;
@@ -43,7 +43,7 @@ class OngoingOrdersList extends StatelessWidget {
                       ? Image.network(
                           order.product.images.first,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => const Icon(
+                          errorBuilder: (_, _, _) => const Icon(
                             Icons.image_not_supported_outlined,
                             color: AppColors.gray400,
                           ),

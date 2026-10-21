@@ -1,10 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:nexa/core/router/app_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
+import 'package:nexa/features/auth/presentation/providers/auth_provider.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
@@ -12,9 +13,6 @@ class SignInScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<SignInScreen> createState() => _SignInScreenState();
 }
-
-bool isObscure = true;
-bool isButtonActive = true;
 
 final TextStyle linkStyle = TextStyle(
   decoration: TextDecoration.underline,
@@ -25,6 +23,36 @@ final TextStyle linkStyle = TextStyle(
 );
 
 class _SignInScreenState extends ConsumerState<SignInScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isObscure = true;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signIn() async {
+    setState(() => _isLoading = true);
+    try {
+      await ref
+          .read(authRepositoryProvider)
+          .signIn(_emailController.text.trim(), _passwordController.text);
+      if (mounted) context.go('/home');
+    } on FirebaseAuthException catch (error) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.message ?? 'Unable to sign in.')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +86,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 4),
-              TextField(keyboardType: TextInputType.emailAddress),
+              TextField(
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
               const SizedBox(height: 12),
 
               Text(
@@ -69,17 +100,18 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
               const SizedBox(height: 4),
               TextField(
+                controller: _passwordController,
                 keyboardType: TextInputType.visiblePassword,
-                obscureText: isObscure,
+                obscureText: _isObscure,
                 decoration: InputDecoration(
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
-                        isObscure = !isObscure;
+                        _isObscure = !_isObscure;
                       });
                     },
                     child: Icon(
-                      isObscure
+                      _isObscure
                           ? Icons.visibility_off
                           : Icons.visibility_outlined,
                       size: 22,
@@ -112,14 +144,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                 width: double.infinity,
                 height: 54,
                 child: ElevatedButton(
-                  onPressed: isButtonActive
-                      ? () {
-                          ref.read(authStateProvider.notifier).state = true;
-                          context.go('/home');
-                        }
-                      : null,
+                  onPressed: _isLoading ? null : _signIn,
                   child: Text(
-                    "Sign in",
+                    _isLoading ? "Signing in..." : "Sign in",
                     style: AppTextStyles.body3SemiBold.copyWith(
                       color: AppColors.white,
                     ),

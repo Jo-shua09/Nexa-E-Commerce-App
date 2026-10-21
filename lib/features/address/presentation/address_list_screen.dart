@@ -67,7 +67,7 @@ class AddressListScreen extends ConsumerWidget {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               itemCount: addresses.length + 1,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              separatorBuilder: (_, _) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 if (index == addresses.length) {
                   return _AddNewAddressButton(

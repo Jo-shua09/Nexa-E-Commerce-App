@@ -18,7 +18,7 @@ class SearchResultWidget extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemCount: results.length,
-      separatorBuilder: (_, __) =>
+      separatorBuilder: (_, _) =>
           const Divider(color: AppColors.gray100, thickness: 1, height: 1),
       itemBuilder: (context, index) {
         final product = results[index];
@@ -40,7 +40,7 @@ class SearchResultWidget extends StatelessWidget {
                   ? Image.network(
                       product.images.first,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const Icon(
+                      errorBuilder: (_, _, _) => const Icon(
                         Icons.image_not_supported_outlined,
                         color: AppColors.gray400,
                         size: 24,

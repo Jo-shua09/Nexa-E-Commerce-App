@@ -67,7 +67,7 @@ class PaymentMethodScreen extends ConsumerWidget {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               itemCount: cards.length + 1,
-              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              separatorBuilder: (_, _) => const SizedBox(height: 16),
               itemBuilder: (context, index) {
                 if (index == cards.length) {
                   return _AddNewCardButton(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nexa/features/auth/presentation/providers/auth_provider.dart';
 import 'package:nexa/core/presentation/scaffold_with_nav_bar.dart';
 import 'package:nexa/features/address/presentation/address_list_screen.dart';
 import 'package:nexa/features/address/presentation/new_address_screen.dart';
@@ -32,7 +32,6 @@ import 'package:nexa/features/startup/presentation/onboarding_screen.dart';
 import 'package:nexa/features/startup/presentation/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
-final authStateProvider = StateProvider<bool>((ref) => false);
 
 final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
@@ -40,7 +39,13 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/splash',
     debugLogDiagnostics: true,
     redirect: (context, state) {
-      final isAuthenticated = ref.read(authStateProvider);
+      final authState = ref.read(authStateProvider);
+      if (authState.isLoading) return null;
+
+      final isAuthenticated = authState.maybeWhen(
+        data: (user) => user != null,
+        orElse: () => false,
+      );
       final isGoingToPublicRoute = {
         '/onboarding',
         '/sign-in',

@@ -50,7 +50,7 @@ class SavedGridWidget extends ConsumerWidget {
                                 product.images.first,
                                 fit: BoxFit.cover,
                                 height: double.infinity,
-                                errorBuilder: (_, __, ___) => const Icon(
+                                errorBuilder: (_, _, _) => const Icon(
                                   Icons.image_not_supported_outlined,
                                   color: AppColors.gray400,
                                   size: 28,

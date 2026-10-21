@@ -3,7 +3,7 @@ import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
 
 class EmptyOrderWidget extends StatelessWidget {
-  const EmptyOrderWidget();
+  const EmptyOrderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
