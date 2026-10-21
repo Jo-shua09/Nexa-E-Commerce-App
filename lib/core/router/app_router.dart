@@ -21,6 +21,9 @@ import 'package:nexa/features/payment/presentation/new_card_screen.dart';
 import 'package:nexa/features/payment/presentation/payment_method_screen.dart';
 import 'package:nexa/features/products/presentation/product_details_screen.dart';
 import 'package:nexa/features/products/presentation/reviews_screen.dart';
+import 'package:nexa/features/profile/presentation/customer_service_chat_screen.dart';
+import 'package:nexa/features/profile/presentation/faq_screen.dart';
+import 'package:nexa/features/profile/presentation/help_center_screen.dart';
 import 'package:nexa/features/profile/presentation/my_details_screen.dart';
 import 'package:nexa/features/profile/presentation/notification_settings_screen.dart';
 import 'package:nexa/features/saved/presentation/saved_screen.dart';
@@ -207,6 +210,24 @@ final routerProvider = Provider<GoRouter>((ref) {
                     path: 'notification-settings',
                     builder: (context, state) =>
                         const NotificationSettingsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'faqs',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const FAQScreen(),
+                  ),
+                  GoRoute(
+                    path: 'help-center',
+                    parentNavigatorKey: rootNavigatorKey,
+                    builder: (context, state) => const HelpCenterScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'chat',
+                        parentNavigatorKey: rootNavigatorKey,
+                        builder: (context, state) =>
+                            const CustomerServiceChatScreen(),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'orders',
