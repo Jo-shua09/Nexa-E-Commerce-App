@@ -30,10 +30,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         centerTitle: false,
-        title: Text(
-          "Discover",
-          style: AppTextStyles.header2SemiBold.copyWith(
-            color: AppColors.gray900,
+        automaticallyImplyLeading: false,
+        titleSpacing: 0,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Discover",
+            style: AppTextStyles.header2SemiBold.copyWith(
+              color: AppColors.gray900,
+            ),
           ),
         ),
         actions: [
