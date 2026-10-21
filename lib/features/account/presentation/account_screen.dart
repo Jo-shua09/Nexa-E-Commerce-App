@@ -52,7 +52,7 @@ class AccountScreen extends StatelessWidget {
           _AccountMenuItem(
             icon: Icons.manage_accounts_outlined,
             title: 'My Details',
-            onTap: () {},
+            onTap: () => context.push('/account/details'),
           ),
           _AccountMenuItem(
             icon: Icons.home_work_outlined,
@@ -67,17 +67,17 @@ class AccountScreen extends StatelessWidget {
           _AccountMenuItem(
             icon: Icons.notifications_none_rounded,
             title: 'Notifications',
-            onTap: () => context.push('/notifications'),
+            onTap: () => context.push('/account/notification-settings'),
           ),
           _AccountMenuItem(
             icon: Icons.help_outline_rounded,
             title: 'FAQs',
-            onTap: () {},
+            onTap: () => context.push('/faq'),
           ),
           _AccountMenuItem(
             icon: Icons.headset_mic_outlined,
             title: 'Help Center',
-            onTap: () {},
+            onTap: () => context.push('/help'),
           ),
           _AccountMenuItem(
             icon: Icons.logout_rounded,
