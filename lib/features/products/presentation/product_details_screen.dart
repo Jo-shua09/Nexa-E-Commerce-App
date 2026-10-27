@@ -6,8 +6,8 @@ import 'package:nexa/core/theme/app_text_styles.dart';
 import 'package:nexa/core/widgets/circular_icon_button.dart';
 import 'package:nexa/features/cart/presentation/providers/cart_provider.dart';
 import 'package:nexa/features/products/domain/models/products.dart';
-import 'package:nexa/features/products/presentation/providers/product_providers.dart';
 import 'package:nexa/features/saved/presentation/providers/saved_providers.dart';
+import 'package:nexa/features/products/presentation/providers/product_providers.dart';
 
 class ProductDetailsScreen extends ConsumerStatefulWidget {
   final String productId;
@@ -60,9 +60,8 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
       420.0,
     );
     final savedProducts =
-      ref.watch(savedProductsProvider).asData?.value ?? const <Product>[];
-    final isSaved = savedProducts
-        .any((item) => item.id == product.id);
+        ref.watch(savedProductsProvider).asData?.value ?? const <Product>[];
+    final isSaved = savedProducts.any((item) => item.id == product.id);
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -300,11 +299,8 @@ class _ProductDetailsScreenState extends ConsumerState<ProductDetailsScreen> {
                       final added = await runCartAction(
                         context,
                         ref,
-                        (repository, userId) => repository.addItem(
-                          userId,
-                          product,
-                          _selectedSize,
-                        ),
+                        (repository, userId) =>
+                            repository.addItem(userId, product, _selectedSize),
                       );
                       if (!added || !context.mounted) return;
 

@@ -1,18 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_riverpod/legacy.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nexa/features/products/data/repositories/product_repository.dart';
-import 'package:nexa/features/products/domain/models/products.dart';
+import '../../data/repositories/product_repository.dart';
+import '../../domain/models/products.dart';
 
-final productRepositoryProvider = Provider<ProductRepository>((ref) {
-  return FirestoreProductRepository(FirebaseFirestore.instance);
-});
-
+// Provides the full list of products
 final productsStreamProvider = StreamProvider<List<Product>>((ref) {
   final repository = ref.watch(productRepositoryProvider);
   return repository.watchProducts();
 });
 
+// Provides a single product by its ID
 final productsByIdStreamProvider = StreamProvider.family<Product?, String>((
   ref,
   id,
@@ -20,5 +16,3 @@ final productsByIdStreamProvider = StreamProvider.family<Product?, String>((
   final repository = ref.watch(productRepositoryProvider);
   return repository.watchProductById(id);
 });
-
-final selectedCategoryProvider = StateProvider<String>((ref) => 'All');
