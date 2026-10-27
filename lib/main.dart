@@ -6,18 +6,10 @@ import 'package:nexa/app.dart';
 import 'firebase_options.dart';
 import 'package:nexa/features/products/data/sources/dummy_products.dart';
 
-// 1. SEED FUNCTION (Outside of main)
 Future<void> seedProductsToFirestore() async {
   final firestore = FirebaseFirestore.instance;
   final collection = firestore.collection('products');
 
-  final snapshot = await collection.limit(1).get();
-  if (snapshot.docs.isNotEmpty) {
-    print("Products already seeded!");
-    return;
-  }
-
-  print("Seeding products to Firestore...");
   for (final product in dummyProducts) {
     await collection.doc(product.id).set({
       'title': product.title,
@@ -29,10 +21,8 @@ Future<void> seedProductsToFirestore() async {
       'reviewsCount': product.reviewsCount,
     });
   }
-  print("Successfully seeded products!");
 }
 
-// 2. MAIN FUNCTION
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
