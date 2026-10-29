@@ -1,112 +1,105 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nexa/features/products/domain/models/products.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../domain/models/cart_item.dart';
+import '../../../products/domain/models/products.dart';
 
-class CartItem {
-  final Product product;
-  final String size;
-  final int quantity;
+class CartRepository {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  const CartItem({
-    required this.product,
-    required this.size,
-    this.quantity = 1,
-  });
+  // Stream the user's active cart
+  Stream<List<CartItem>> watchCart(String userId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('cart')
+        .orderBy('addedAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return CartItem.fromMap(doc.id, doc.data());
+          }).toList();
+        });
+  }
 
-  double get totalPrice => product.price * quantity;
+  // Add an item or increment quantity if it already exists (same product + size)
+  Future<bool> addItem(String userId, Product product, String size) async {
+    try {
+      final cartRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('cart');
 
-  factory CartItem.fromMap(Map<String, dynamic> data) {
-    final productId = data['productId'];
-    final productData = data['product'];
-    final size = data['size'];
-    final quantity = data['quantity'];
+      final query = await cartRef
+          .where('productId', isEqualTo: product.id)
+          .where('size', isEqualTo: size)
+          .get();
 
-    if (productId is! String ||
-        productData is! Map<String, dynamic> ||
-        size is! String ||
-        quantity is! int ||
-        quantity < 1) {
-      throw const FormatException('Cart item has invalid or missing fields.');
+      if (query.docs.isNotEmpty) {
+        final docId = query.docs.first.id;
+        final currentQuantity = query.docs.first.data()['quantity'] ?? 1;
+        await cartRef.doc(docId).update({'quantity': currentQuantity + 1});
+      } else {
+        await cartRef.add({
+          'productId': product.id,
+          'title': product.title,
+          'price': product.price,
+          'image': product.images.isNotEmpty ? product.images.first : '',
+          'size': size,
+          'quantity': 1,
+          'addedAt': FieldValue.serverTimestamp(),
+        });
+      }
+      return true;
+    } catch (e) {
+      return false;
     }
-
-    return CartItem(
-      product: Product.fromMap(productId, productData),
-      size: size,
-      quantity: quantity,
-    );
   }
 
-  Map<String, dynamic> toMap() => {
-    'productId': product.id,
-    'product': product.toMap(),
-    'size': size,
-    'quantity': quantity,
-  };
-}
-
-abstract class CartRepository {
-  Stream<List<CartItem>> watchCart(String userId);
-  Future<void> addItem(String userId, Product product, String size);
-  Future<void> setQuantity(
+  // Update quantity (delete if 0)
+  Future<void> updateQuantity(
     String userId,
-    CartItem item,
-    int quantity,
-  );
-  Future<void> removeItem(String userId, CartItem item);
-}
-
-class FirestoreCartRepository implements CartRepository {
-  FirestoreCartRepository(this._firestore);
-
-  final FirebaseFirestore _firestore;
-
-  CollectionReference<Map<String, dynamic>> _items(String userId) =>
-      _firestore.collection('users').doc(userId).collection('cart');
-
-  @override
-  Stream<List<CartItem>> watchCart(String userId) => _items(
-    userId,
-  ).snapshots().map((snapshot) {
-    return snapshot.docs.map((doc) => CartItem.fromMap(doc.data())).toList();
-  });
-
-  @override
-  Future<void> addItem(String userId, Product product, String size) async {
-    final itemRef = _items(userId).doc(cartDocumentId(product.id, size));
-    await _firestore.runTransaction((transaction) async {
-      final snapshot = await transaction.get(itemRef);
-      final quantity = snapshot.exists
-          ? CartItem.fromMap(snapshot.data()!).quantity + 1
-          : 1;
-      transaction.set(
-        itemRef,
-        CartItem(product: product, size: size, quantity: quantity).toMap(),
-      );
-    });
-  }
-
-  @override
-  Future<void> setQuantity(
-    String userId,
-    CartItem item,
-    int quantity,
+    String cartItemId,
+    int newQuantity,
   ) async {
-    final itemRef = _items(
-      userId,
-    ).doc(cartDocumentId(item.product.id, item.size));
-    if (quantity < 1) {
-      await itemRef.delete();
+    final docRef = _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('cart')
+        .doc(cartItemId);
+
+    if (newQuantity <= 0) {
+      await docRef.delete();
     } else {
-      await itemRef.update({'quantity': quantity});
+      await docRef.update({'quantity': newQuantity});
     }
   }
 
-  @override
-  Future<void> removeItem(String userId, CartItem item) => _items(
-    userId,
-  ).doc(cartDocumentId(item.product.id, item.size)).delete();
+  // Remove a single item
+  Future<void> removeItem(String userId, String cartItemId) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('cart')
+        .doc(cartItemId)
+        .delete();
+  }
+
+  // Clear entire cart (used after checkout)
+  Future<void> clearCart(String userId) async {
+    final cartRef = _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('cart');
+    final snapshots = await cartRef.get();
+
+    final batch = _firestore.batch();
+    for (var doc in snapshots.docs) {
+      batch.delete(doc.reference);
+    }
+    await batch.commit();
+  }
 }
 
-String cartDocumentId(String productId, String size) =>
-    base64Url.encode(utf8.encode('$productId::$size')).replaceAll('=', '');
+final cartRepositoryProvider = Provider<CartRepository>((ref) {
+  return CartRepository();
+});

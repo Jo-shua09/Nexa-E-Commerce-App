@@ -1,91 +1,97 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:nexa/features/cart/data/repositories/cart_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nexa/features/cart/domain/models/cart_item.dart';
 import 'package:nexa/features/orders/domain/models/order_model.dart';
 
-abstract class OrderRepository {
-  Stream<List<OrderModel>> watchOrders(String userId);
-  Stream<OrderModel?> watchOrder(String userId, String orderId);
-  Future<void> placeOrder(String userId, List<CartItem> cartItems);
-  Future<void> submitReview(String userId, String orderId, double score);
-}
+class OrderRepository {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class FirestoreOrderRepository implements OrderRepository {
-  FirestoreOrderRepository(this._firestore);
+  // 1. Place a new order
+  Future<bool> placeOrder({
+    required String userId,
+    required List<CartItem> cartItems,
+    required double totalAmount,
+    required String address,
+  }) async {
+    try {
+      final orderRef = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('orders')
+          .doc();
 
-  final FirebaseFirestore _firestore;
-
-  CollectionReference<Map<String, dynamic>> _orders(String userId) =>
-      _firestore.collection('users').doc(userId).collection('orders');
-
-  CollectionReference<Map<String, dynamic>> _cart(String userId) =>
-      _firestore.collection('users').doc(userId).collection('cart');
-
-  @override
-  Stream<List<OrderModel>> watchOrders(String userId) => _orders(
-    userId,
-  ).orderBy('createdAt', descending: true).snapshots().map((snapshot) {
-    return snapshot.docs
-        .map((document) => OrderModel.fromMap(document.id, document.data()))
-        .toList();
-  });
-
-  @override
-  Stream<OrderModel?> watchOrder(String userId, String orderId) => _orders(
-    userId,
-  ).doc(orderId).snapshots().map(
-    (document) => document.exists
-        ? OrderModel.fromMap(document.id, document.data()!)
-        : null,
-  );
-
-  @override
-  Future<void> placeOrder(String userId, List<CartItem> cartItems) async {
-    if (cartItems.isEmpty) {
-      throw StateError('Cannot place an order with an empty cart.');
+      await orderRef.set({
+        'id': orderRef.id,
+        'totalAmount': totalAmount,
+        'status': 'ongoing',
+        'address': address,
+        'createdAt': FieldValue.serverTimestamp(),
+        'items': cartItems
+            .map(
+              (item) => {
+                'productId': item.productId,
+                'title': item.title,
+                'price': item.price,
+                'image': item.image,
+                'size': item.size,
+                'quantity': item.quantity,
+              },
+            )
+            .toList(),
+      });
+      return true;
+    } catch (e) {
+      return false;
     }
-
-    final cartRefs = cartItems
-        .map(
-          (item) => _cart(
-            userId,
-          ).doc(cartDocumentId(item.product.id, item.size)),
-        )
-        .toList();
-    final orderRefs = List.generate(
-      cartItems.length,
-      (_) => _orders(userId).doc(),
-    );
-
-    await _firestore.runTransaction((transaction) async {
-      final snapshots = <DocumentSnapshot<Map<String, dynamic>>>[];
-      for (final cartRef in cartRefs) {
-        snapshots.add(await transaction.get(cartRef));
-      }
-      if (snapshots.any((snapshot) => !snapshot.exists)) {
-        throw StateError('The cart changed. Review it before placing the order.');
-      }
-
-      for (var index = 0; index < snapshots.length; index++) {
-        final item = CartItem.fromMap(snapshots[index].data()!);
-        transaction.set(orderRefs[index], {
-          'productId': item.product.id,
-          'product': item.product.toMap(),
-          'size': item.size,
-          'quantity': item.quantity,
-          'status': 'Packing',
-          'createdAt': FieldValue.serverTimestamp(),
-        });
-        transaction.delete(cartRefs[index]);
-      }
-    });
   }
 
-  @override
+  // 2. Stream all orders
+  Stream<List<OrderModel>> watchOrders(String userId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('orders')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return OrderModel.fromMap(doc.id, doc.data());
+          }).toList();
+        });
+  }
+
+  // 3. Stream a single order
+  Stream<OrderModel?> watchOrder(String userId, String orderId) {
+    return _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('orders')
+        .doc(orderId)
+        .snapshots()
+        .map((doc) {
+          if (doc.exists && doc.data() != null) {
+            return OrderModel.fromMap(doc.id, doc.data()!);
+          }
+          return null;
+        });
+  }
+
+  // 4. Submit a review for a completed order
   Future<void> submitReview(
     String userId,
     String orderId,
-    double score,
-  ) {
-    return _orders(userId).doc(orderId).update({'reviewScore': score});
+    double rating,
+  ) async {
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('orders')
+        .doc(orderId)
+        .update({'rating': rating, 'isReviewed': true});
   }
 }
+
+// Provide the repository globally
+final orderRepositoryProvider = Provider<OrderRepository>((ref) {
+  return OrderRepository();
+});

@@ -1,60 +1,68 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nexa/features/auth/presentation/providers/auth_provider.dart';
-import 'package:nexa/features/cart/data/repositories/cart_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../data/repositories/cart_repository.dart';
+import '../../domain/models/cart_item.dart';
 
-final cartRepositoryProvider = Provider<CartRepository>((ref) {
-  return FirestoreCartRepository(FirebaseFirestore.instance);
+// 1. Auth State
+final authStateProvider = StreamProvider<User?>((ref) {
+  return FirebaseAuth.instance.authStateChanges();
 });
 
-final cartProvider = StreamProvider<List<CartItem>>((ref) {
-  final userId = ref.watch(currentUserIdProvider);
-  if (userId == null) return Stream.value(const []);
-  return ref.watch(cartRepositoryProvider).watchCart(userId);
+// 2. Live Cart Stream
+final cartStreamProvider = StreamProvider<List<CartItem>>((ref) {
+  final user = ref.watch(authStateProvider).value;
+  
+  if (user == null) {
+    return Stream.value([]); // Return empty cart if logged out
+  }
+  
+  final repository = ref.watch(cartRepositoryProvider);
+  return repository.watchCart(user.uid);
 });
 
+// 3. Subtotal Calculation (Sum of all item prices * quantity)
+final cartSubtotalProvider = Provider<double>((ref) {
+  final cartItems = ref.watch(cartStreamProvider).value ?? [];
+  return cartItems.fold(0.0, (sum, item) => sum + (item.price * item.quantity));
+});
+
+// 4. Total Calculation (Subtotal + 5% VAT + Shipping)
+final cartTotalProvider = Provider<double>((ref) {
+  final subtotal = ref.watch(cartSubtotalProvider);
+  
+  if (subtotal == 0) return 0.0; // Don't add fees if cart is empty
+  
+  final vat = subtotal * 0.05; 
+  const shippingCost = 15.0;
+  
+  return subtotal + vat + shippingCost;
+});
+
+// 5. Item Count Calculation (Fixes your badge error)
+final cartItemCountProvider = Provider<int>((ref) {
+  final cartItems = ref.watch(cartStreamProvider).value ?? [];
+  return cartItems.fold(0, (sum, item) => sum + item.quantity);
+});
+
+// 6. Secure Firebase Action Helper
 Future<bool> runCartAction(
   BuildContext context,
   WidgetRef ref,
-  Future<void> Function(CartRepository repository, String userId) action,
+  Future<dynamic> Function(CartRepository repository, String userId) action,
 ) async {
-  final userId = ref.read(currentUserIdProvider);
-  if (userId == null) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Sign in to update your cart.')),
-    );
-    return false;
-  }
-
-  try {
-    await action(ref.read(cartRepositoryProvider), userId);
-    return true;
-  } on FirebaseException catch (error) {
+  final user = FirebaseAuth.instance.currentUser;
+  
+  if (user == null) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message ?? 'Unable to update your cart.')),
+        const SnackBar(content: Text('Please log in to update your cart')),
       );
     }
     return false;
   }
+
+  final repository = ref.read(cartRepositoryProvider);
+  await action(repository, user.uid);
+  return true;
 }
-
-final cartSubtotalProvider = Provider<double>((ref) {
-  final items = ref.watch(cartProvider).asData?.value ?? const <CartItem>[];
-  return items.fold(0.0, (subtotal, item) => subtotal + item.totalPrice);
-});
-
-const double shippingFee = 80.00;
-const double vatPercentage = 0.00;
-
-final cartTotalProvider = Provider<double>((ref) {
-  final subtotal = ref.watch(cartSubtotalProvider);
-  if (subtotal == 0) return 0.0;
-  return subtotal + shippingFee + (subtotal * vatPercentage);
-});
-
-final cartItemCountProvider = Provider<int>((ref) {
-  final items = ref.watch(cartProvider).asData?.value ?? const <CartItem>[];
-  return items.map((item) => item.product.id).toSet().length;
-});

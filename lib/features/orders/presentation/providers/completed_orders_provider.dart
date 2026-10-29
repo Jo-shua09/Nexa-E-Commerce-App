@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nexa/features/orders/domain/models/order_model.dart';
 import 'package:nexa/features/orders/presentation/providers/order_provider.dart';
 
 typedef CompletedOrderModel = OrderModel;

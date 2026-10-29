@@ -1,22 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nexa/features/auth/presentation/providers/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nexa/features/orders/data/repositories/order_repository.dart';
 import 'package:nexa/features/orders/domain/models/order_model.dart';
 
-export 'package:nexa/features/orders/domain/models/order_model.dart';
-
-final orderRepositoryProvider = Provider<OrderRepository>((ref) {
-  return FirestoreOrderRepository(FirebaseFirestore.instance);
+// Get current user ID safely
+final currentUserIdProvider = Provider<String?>((ref) {
+  return FirebaseAuth.instance.currentUser?.uid;
 });
 
+// THIS IS THE MISSING PROVIDER - Streams ALL orders for the user
 final userOrdersProvider = StreamProvider<List<OrderModel>>((ref) {
   final userId = ref.watch(currentUserIdProvider);
   if (userId == null) return Stream.value(const []);
+
   return ref.watch(orderRepositoryProvider).watchOrders(userId);
 });
 
+// Filter for ongoing orders
 final ongoingOrdersProvider = Provider<AsyncValue<List<OrderModel>>>((ref) {
   return ref
       .watch(userOrdersProvider)
@@ -26,15 +28,18 @@ final ongoingOrdersProvider = Provider<AsyncValue<List<OrderModel>>>((ref) {
       );
 });
 
+// Stream specific order
 final orderByIdProvider = StreamProvider.family<OrderModel?, String>((
   ref,
   orderId,
 ) {
   final userId = ref.watch(currentUserIdProvider);
   if (userId == null) return Stream.value(null);
+
   return ref.watch(orderRepositoryProvider).watchOrder(userId, orderId);
 });
 
+// Helper for UI buttons
 Future<bool> runOrderAction(
   BuildContext context,
   WidgetRef ref,

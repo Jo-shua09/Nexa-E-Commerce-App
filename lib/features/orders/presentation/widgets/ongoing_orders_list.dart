@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nexa/core/theme/app_colors.dart';
 import 'package:nexa/core/theme/app_text_styles.dart';
-import 'package:nexa/features/orders/presentation/providers/order_provider.dart';
+import 'package:nexa/features/orders/domain/models/order_model.dart';
 
 class OngoingOrdersList extends StatelessWidget {
   final List<OrderModel> orders;
